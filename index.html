@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Usman Gani Pranto | Mechanical Engineering, BUET</title>
+<meta name="description" content="Usman Gani Pranto is a final-year mechanical engineering student at BUET working on atomistic molecular dynamics of solder joint reliability and latent heat thermal energy storage.">
+<meta property="og:title" content="Usman Gani Pranto">
+<meta property="og:description" content="Atomistic simulation of solder joint reliability, thermal energy storage, and engineering leadership at BUET.">
+<meta property="og:image" content="assets/portrait.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230C0F1A'/%3E%3Ccircle cx='22' cy='26' r='9' fill='%23B3ADF5'/%3E%3Ccircle cx='42' cy='40' r='9' fill='%23E8955A'/%3E%3Ccircle cx='44' cy='18' r='4' fill='%235D6684'/%3E%3Ccircle cx='18' cy='46' r='4' fill='%235D6684'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0C0F1A;
+  --panel:#121729;
+  --line:#242B42;
+  --text:#E8E9F1;
+  --muted:#A3A9BF;
+  --copper:#E8955A;
+  --silver:#B3ADF5;
+  --tin:#5D6684;
+  --display:'Syne', 'Arial Narrow', sans-serif;
+  --body:'Instrument Sans', 'Segoe UI', system-ui, sans-serif;
+  --wrap:1180px;
+  --gutter:clamp(20px, 5vw, 56px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:84px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.65;padding-bottom:env(safe-area-inset-bottom,0px)}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--text);text-decoration-color:var(--copper);text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover{color:var(--copper)}
+:focus-visible{outline:2px solid var(--copper);outline-offset:3px;border-radius:2px}
+.skip{position:absolute;left:-999px;top:12px;background:var(--copper);color:var(--ink);padding:10px 16px;z-index:100}
+.skip:focus{left:12px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+
+/* Navigation */
+.top{position:sticky;top:0;z-index:50;background:rgba(12,15,26,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;height:68px}
+.brand{font-family:var(--display);font-weight:700;font-size:18px;text-decoration:none;white-space:nowrap}
+.nav{display:flex;gap:26px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{font-size:15px;color:var(--muted);text-decoration:none;white-space:nowrap;padding:10px 0}
+.nav a:hover{color:var(--text)}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center;padding:clamp(48px,8vw,104px) 0 clamp(40px,6vw,80px)}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(46px,7.4vw,104px);line-height:.94;letter-spacing:-.025em;margin:0 0 28px}
+.lede{font-size:clamp(19px,1.9vw,23px);line-height:1.5;max-width:30ch;margin:0 0 14px}
+.sublede{color:var(--muted);max-width:48ch;margin:0 0 32px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:28px}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:999px;font-weight:600;font-size:16px;text-decoration:none;border:1px solid var(--line)}
+.btn.primary{background:var(--copper);border-color:var(--copper);color:var(--ink)}
+.btn.primary:hover{background:#F2A66F;color:var(--ink)}
+.btn:not(.primary):hover{border-color:var(--copper);color:var(--text)}
+.profiles{display:flex;flex-wrap:wrap;gap:20px;font-size:15px}
+.profiles a{color:var(--muted)}
+.profiles a:hover{color:var(--copper)}
+
+.viewport{position:relative;background:radial-gradient(circle at 50% 45%, #151B30 0%, var(--ink) 70%);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.viewport canvas{display:block;width:100%;aspect-ratio:1/1}
+.switch{position:absolute;left:16px;right:16px;top:16px;display:flex;gap:6px;background:rgba(12,15,26,.75);border:1px solid var(--line);border-radius:999px;padding:5px;width:max-content;max-width:calc(100% - 32px)}
+.switch button{appearance:none;border:0;background:transparent;color:var(--muted);font:500 14px/1 var(--body);padding:11px 14px;border-radius:999px;cursor:pointer;min-height:40px}
+.switch button[aria-pressed="true"]{background:var(--text);color:var(--ink)}
+.legend{position:absolute;left:18px;bottom:16px;display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.caption{font-size:14px;color:var(--muted);margin:12px 4px 0;max-width:60ch}
+
+/* Sections */
+section.block{border-top:1px solid var(--line);padding:clamp(56px,8vw,96px) 0}
+.block .wrap{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:clamp(24px,5vw,72px)}
+.head{align-self:start;position:sticky;top:100px}
+.head h2{font-family:var(--display);font-weight:700;font-size:clamp(32px,3.6vw,46px);line-height:1.05;letter-spacing:-.015em;margin:0 0 12px}
+.head p{color:var(--muted);margin:0;font-size:16px;max-width:34ch}
+.body > * + *{margin-top:40px}
+h3{font-family:var(--display);font-weight:700;font-size:clamp(21px,2vw,25px);line-height:1.25;margin:0 0 6px;letter-spacing:-.005em}
+.meta{color:var(--muted);font-size:15px;margin:0 0 14px}
+p{margin:0 0 14px;max-width:68ch}
+ul.points{margin:0;padding-left:20px;max-width:68ch}
+ul.points li{margin-bottom:8px}
+ul.points li::marker{color:var(--copper)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;padding:0;list-style:none}
+.tags li{font-size:14px;padding:5px 12px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+figure{margin:0}
+figure img{border-radius:14px;border:1px solid var(--line)}
+figcaption{font-size:14px;color:var(--muted);margin-top:10px}
+
+/* About */
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,300px);gap:40px;align-items:start}
+.about figure img{aspect-ratio:4/5;object-fit:cover;object-position:72% 50%}
+
+/* Research */
+.feature{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,3vw,36px)}
+.status{display:inline-block;font-size:13px;font-weight:600;padding:4px 11px;border-radius:999px;margin-bottom:14px}
+.status.live{background:rgba(232,149,90,.14);color:var(--copper)}
+.status.review{background:rgba(179,173,245,.14);color:var(--silver)}
+ol.pubs{list-style:none;margin:0;padding:0}
+ol.pubs li{padding:22px 0;border-top:1px solid var(--line)}
+ol.pubs li:last-child{border-bottom:1px solid var(--line)}
+.pub-title{font-weight:600;display:block;margin:4px 0 6px;max-width:68ch}
+.pub-authors,.pub-venue{color:var(--muted);font-size:15px;display:block;max-width:68ch}
+.pub-authors strong{color:var(--text);font-weight:600}
+.subhead{font-family:var(--display);font-weight:700;font-size:20px;margin:0 0 4px}
+
+/* Projects */
+.projects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.project{border:1px solid var(--line);border-radius:18px;padding:26px;display:flex;flex-direction:column}
+.project .meta{margin-bottom:10px}
+.project p{font-size:16px}
+.project .tags{margin-top:auto;padding-top:8px}
+
+/* Leadership timeline */
+.org{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;padding-bottom:36px;border-bottom:1px solid var(--line)}
+.org:last-child{border-bottom:0;padding-bottom:0}
+.roles{list-style:none;margin:0 0 16px;padding:0;display:flex;flex-direction:column;gap:6px}
+.roles li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:baseline}
+.roles .role{font-weight:600}
+.roles .role.past{font-weight:400;color:var(--muted)}
+.roles time{font-size:14px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* Honours and lists */
+.rows{list-style:none;margin:0;padding:0}
+.rows li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;padding:16px 0;border-top:1px solid var(--line);align-items:baseline}
+.rows li:last-child{border-bottom:1px solid var(--line)}
+.rows strong{font-weight:600;display:block}
+.rows span.note{color:var(--muted);font-size:15px;display:block}
+.rows time{font-size:14px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+.skills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 32px}
+.skills h3{font-size:18px;margin-bottom:8px}
+.skills p{color:var(--muted);font-size:16px;margin:0}
+
+/* Contact */
+.contact h2{font-family:var(--display);font-weight:800;font-size:clamp(40px,6.4vw,84px);line-height:.98;letter-spacing:-.025em;margin:0 0 24px;max-width:14ch}
+.contact .mail{font-size:clamp(20px,2.6vw,30px);font-weight:500}
+.contact .profiles{margin-top:28px;font-size:17px;gap:28px}
+footer{border-top:1px solid var(--line);padding:28px 0 40px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+
+@media (max-width: 900px){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .block .wrap{grid-template-columns:minmax(0,1fr)}
+  .head{position:static}
+  .about{grid-template-columns:minmax(0,1fr)}
+  .about figure{max-width:360px}
+  .projects,.skills{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width: 620px){
+  .top .wrap{height:auto;flex-direction:column;align-items:flex-start;gap:0;padding-top:12px}
+  .nav{width:100%;gap:20px}
+  .rows li,.roles li{grid-template-columns:minmax(0,1fr)}
+  .switch button{font-size:13px;padding:10px 11px}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Usman Gani Pranto</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#projects">Projects</a>
+      <a href="#leadership">Leadership</a>
+      <a href="#honours">Honours</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<div class="wrap" id="top">
+  <div class="hero">
+    <div>
+      <h1>Usman Gani Pranto</h1>
+      <p class="lede">I study how solder joints in electronic packages deform and degrade, one atom at a time.</p>
+      <p class="sublede">Final-year mechanical engineering student at Bangladesh University of Engineering and Technology (BUET), Dhaka. I work in molecular dynamics and thermal energy storage, and I hold leadership roles in four student societies.</p>
+      <div class="actions">
+        <a class="btn primary" href="#research">See my research</a>
+        <a class="btn" href="mailto:praanto17@gmail.com">Email me</a>
+      </div>
+      <div class="profiles">
+        <a href="https://www.linkedin.com/in/praaaanto/" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/praaaanto" rel="noopener">GitHub</a>
+        <a href="https://orcid.org/0009-0005-6870-2118" rel="noopener">ORCID</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="viewport">
+        <canvas id="atoms" aria-label="Animated sketch of a solder simulation cell. Silver and copper atoms move from random positions into discrete clusters." role="img"></canvas>
+        <div class="switch" role="group" aria-label="Microstructure model">
+          <button type="button" id="btn-random" aria-pressed="false">Random substitution</button>
+          <button type="button" id="btn-cluster" aria-pressed="true">Discrete precipitates</button>
+        </div>
+        <div class="legend" aria-hidden="true">
+          <span><i style="background:var(--silver)"></i>Silver</span>
+          <span><i style="background:var(--copper)"></i>Copper</span>
+          <span><i style="background:var(--tin)"></i>Tin</span>
+        </div>
+      </div>
+      <p class="caption">The idea behind my thesis, sketched: real SAC305 solder holds silver and copper in discrete intermetallic particles, so I build them that way instead of scattering atoms at random. Illustration only, not simulation output.</p>
+    </div>
+  </div>
+</div>
+
+<section class="block" id="about">
+  <div class="wrap">
+    <div class="head">
+      <h2>About</h2>
+    </div>
+    <div class="body">
+      <div class="about">
+        <div>
+          <p>I am a Level 4 undergraduate in the Department of Mechanical Engineering at BUET, graduating in 2027. My thesis, supervised by Dr. Mohammad Abdul Motalab, uses atomistic simulation to understand the reliability of solder joints in electronic packaging.</p>
+          <p>Before simulation, I learned engineering by building: a honeycomb thermal storage unit that grew from a course project into a conference paper, rover subsystems for BUET's Mars rover team, and two robots. I like problems where careful modelling and physical hardware meet.</p>
+          <p>Outside the lab, I lead the ASHRAE BUET Student Branch and the IMechE BUET Student Chapter, serve as Secretary of the BUET Automobile Club, and I am looking for graduate research opportunities in computational mechanics and thermal sciences.</p>
+        </div>
+        <figure>
+          <img src="assets/portrait.jpg" alt="Usman Gani Pranto smiling in front of a wall of mechanical engineering textbooks" width="1036" height="1176" loading="lazy">
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="research">
+  <div class="wrap">
+    <div class="head">
+      <h2>Research</h2>
+      <p>Molecular dynamics of solder reliability, and latent heat thermal energy storage.</p>
+    </div>
+    <div class="body">
+
+      <article class="feature">
+        <span class="status live">Undergraduate thesis, in progress</span>
+        <h3>Atomistic molecular dynamics of thermomechanical reliability in copper, SAC305 and copper solder joint stacks</h3>
+        <p class="meta">July 2026 to present. Supervisor: Dr. Mohammad Abdul Motalab, Department of Mechanical Engineering, BUET.</p>
+        <p>Solder joints are a frequent point of failure in electronic packages. I model the SAC305 tin, silver and copper solder alloy with its Ag<sub>3</sub>Sn and Cu<sub>6</sub>Sn<sub>5</sub> intermetallic precipitates built as discrete particles, instead of the randomly substituted atoms used in earlier models, and study how that microstructure changes the solder's response to monotonic and cyclic shear.</p>
+        <p>The next stage extends the model to a full layered stack of copper, intermetallic compounds and solder, to examine how damage develops at the interfaces.</p>
+        <ul class="tags" aria-label="Methods">
+          <li>LAMMPS</li><li>2NN-MEAM potentials</li><li>OVITO</li><li>MPI parallel computing</li><li>Python</li>
+        </ul>
+      </article>
+
+      <figure>
+        <img src="assets/predefence.jpg" alt="Pranto presenting a slide comparing discrete precipitates with random substitution at his thesis pre-defence" width="1288" height="952" loading="lazy">
+        <figcaption>Presenting the discrete-precipitate model at my thesis pre-defence, BUET, 30 September 2026.</figcaption>
+      </figure>
+
+      <article>
+        <h3>Honeycomb latent heat thermal energy storage</h3>
+        <p class="meta">October 2025 to present. Department of Mechanical Engineering, BUET.</p>
+        <p>A thermal storage unit for solar-assisted domestic hot water, using paraffin phase change material sealed in honeycomb cells. It began as our ME 310 design project. I designed the unit, led the fabrication of the prototype, used transient computational fluid dynamics in ANSYS Fluent to follow the melting and solidification fronts, and wrote the conference paper. Our team also co-authored and submitted a proposal to the ASHRAE Undergraduate Program Equipment Grant for a teaching version of the unit.</p>
+        <ul class="tags" aria-label="Methods">
+          <li>ANSYS Fluent</li><li>SolidWorks</li><li>Prototype fabrication</li>
+        </ul>
+      </article>
+
+      <div>
+        <p class="subhead">Conference papers</p>
+        <ol class="pubs">
+          <li>
+            <span class="status live">Abstract accepted, full paper in preparation</span>
+            <span class="pub-title">Monotonic and Cyclic Shear of SAC305 Solder with Discrete Intermetallic Precipitates: A Molecular Dynamics Study</span>
+            <span class="pub-authors"><strong>Pranto, U. G.</strong> and Motalab, M. A.</span>
+            <span class="pub-venue">BSME International Conference on Thermo-Fluid Engineering (ICTE) 2026, Bangladesh University of Engineering and Technology, Dhaka.</span>
+          </li>
+          <li>
+            <span class="status review">Manuscript under review</span>
+            <span class="pub-title">Design and Development of a Honeycomb-Based Latent Heat Thermal Energy Storage (LHTES) Unit Using Paraffin PCM for Solar-Assisted Domestic Hot Water Systems</span>
+            <span class="pub-authors">Sohan, S. M. S. A., <strong>Pranto, U. G.*</strong>, Faisal, M. F., Kafi, M. S. H. and Ar-Rafi, K. M. &nbsp;*Corresponding author.</span>
+            <span class="pub-venue">ASHRAE 2027 Winter Conference, Chicago, Illinois, January 2027.</span>
+          </li>
+        </ol>
+      </div>
+
+      <div>
+        <p class="subhead">Talks</p>
+        <ul class="rows">
+          <li><div><strong>Thesis pre-defence</strong><span class="note">Department of Mechanical Engineering, BUET</span></div><time datetime="2026-09-30">Sep 2026</time></li>
+          <li><div><strong>Before you apply: guidance for ASHRAE scholarship applicants</strong><span class="note">Co-presented at ASHRAE Beyond Membership, ASHRAE Bangladesh Chapter, online</span></div><time datetime="2026-08-29">Aug 2026</time></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="block" id="projects">
+  <div class="wrap">
+    <div class="head">
+      <h2>Projects</h2>
+      <p>Hardware I have designed, built and tested.</p>
+    </div>
+    <div class="body">
+      <div class="projects">
+        <article class="project">
+          <h3>Honeycomb thermal storage prototype</h3>
+          <p class="meta">ME 310 design project, 2025 to 2026</p>
+          <p>Designed a honeycomb-encapsulated paraffin storage unit for solar-assisted hot water and led its fabrication with a five-member team. The prototype passed hydrostatic pressure testing, and the design became our ASHRAE conference paper.</p>
+          <ul class="tags"><li>SolidWorks</li><li>ANSYS Fluent</li><li>Fabrication</li></ul>
+        </article>
+        <article class="project">
+          <h3>Mars rover subsystems</h3>
+          <p class="meta">Team Interplanetar, BUET, 2025 to 2026</p>
+          <p>As part of the mechanical and manufacturing subteam, worked on custom wheel design, an Ackermann steering system and the assembly of a robotic gripper, with technical documentation for each.</p>
+          <ul class="tags"><li>SolidWorks</li><li>Mechanism design</li></ul>
+        </article>
+        <article class="project">
+          <h3>Oogway, a bio-mimetic sea turtle robot</h3>
+          <p class="meta">2025</p>
+          <p>An underwater robot that swims with flapping fins and controls its buoyancy to move in three dimensions. Engineered the shell, flippers and sealed motor pods, and verified waterproofing in reservoir tests.</p>
+          <ul class="tags"><li>SolidWorks</li><li>Arduino</li><li>Sensors</li></ul>
+        </article>
+        <article class="project">
+          <h3>SoccerBOT</h3>
+          <p class="meta">Intra BUET Robo Challenge, 2024</p>
+          <p>A remote-controlled soccer robot on mecanum wheels. Led the chassis design and mechanical assembly and integrated the electronics. Placed 4th in the competition.</p>
+          <ul class="tags"><li>SolidWorks</li><li>AutoCAD</li><li>PCB</li></ul>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="leadership">
+  <div class="wrap">
+    <div class="head">
+      <h2>Leadership</h2>
+      <p>Student societies at BUET, from logistics roles to leading them.</p>
+    </div>
+    <div class="body">
+
+      <div class="org">
+        <h3>ASHRAE BUET Student Branch</h3>
+        <ul class="roles">
+          <li><span class="role">President</span><time>Jul 2026 to present</time></li>
+          <li><span class="role past">Manager</span><time>May 2025 to Jul 2026</time></li>
+          <li><span class="role past">Founding member</span><time>Oct 2024</time></li>
+        </ul>
+        <ul class="points">
+          <li>Formed and onboarded the branch's 3rd Executive Committee for the 2026 to 2027 term.</li>
+          <li>Hosted Mr. Abdallah Mahmoud, ASHRAE Regional Vice-Chair for Government Affairs, Region-at-Large, for a branch visit with senior Bangladesh Chapter leaders in September 2026.</li>
+          <li>As Manager, exhibited three of our mechanical prototypes, including heat exchangers and a cooling tower, at SAFECON 2025 and ICME 2025, and represented the branch at the 10th Safe HVACR and Cold Chain Expo.</li>
+          <li>Organised technical tours to industry for branch members.</li>
+        </ul>
+      </div>
+
+      <div class="org">
+        <h3>IMechE BUET Student Chapter</h3>
+        <ul class="roles">
+          <li><span class="role">Chair</span><time>Jul 2026 to present</time></li>
+          <li><span class="role past">Treasurer</span><time>Apr 2025 to Jul 2026</time></li>
+          <li><span class="role past">Member</span><time>2024</time></li>
+        </ul>
+        <ul class="points">
+          <li>Led Speak Out for Engineering: Intra BUET Heats 2026 as Chair, from the call for abstracts to the final in September 2026.</li>
+          <li>Organised the joint IMechE and ASHRAE stall at BUET Club Fest 2026.</li>
+          <li>As Treasurer, managed the chapter budget, ran a member recruitment drive, and handled logistics for two drone workshops and masterclasses with Distinguished Professor Saidur Rahman and Erasmus Mundus representatives.</li>
+        </ul>
+      </div>
+
+      <div class="org">
+        <h3>BUET Automobile Club</h3>
+        <ul class="roles">
+          <li><span class="role">Secretary</span><time>Jul 2026 to present</time></li>
+          <li><span class="role past">Additional Chief Executive, Logistics</span><time>2024 to 2026</time></li>
+        </ul>
+        <ul class="points">
+          <li>Take part in the club's governance and planning meetings, and helped organise events including the freshers' reception and the farewell programme.</li>
+          <li>Coordinated logistics and venues for automotive showcases and robotics exhibitions.</li>
+        </ul>
+      </div>
+
+      <div class="org">
+        <h3>Multiscale Mechanical Modeling and Research Network (MMMRN)</h3>
+        <ul class="roles">
+          <li><span class="role">Vice President, Offline Affairs</span><time>Jul 2026 to present</time></li>
+        </ul>
+        <ul class="points">
+          <li>Working with fellow members to establish this research network as an officially recognised BUET club.</li>
+          <li>Coordinated a joint session on molecular dynamics with LAMMPS together with the AUST Applied Simulation and Modeling Lab.</li>
+        </ul>
+      </div>
+
+      <div class="org">
+        <h3>Badhan Foundation</h3>
+        <ul class="roles">
+          <li><span class="role">Volunteer</span><time>2022 to present</time></li>
+        </ul>
+        <ul class="points">
+          <li>Help run blood donation drives and find donors for medical emergencies.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="block" id="honours">
+  <div class="wrap">
+    <div class="head">
+      <h2>Honours</h2>
+      <p>Awards, scholarships and certifications.</p>
+    </div>
+    <div class="body">
+      <ul class="rows">
+        <li><div><strong>ASHRAE Scholarship Trustees General Scholarship</strong><span class="note">ASHRAE Foundation. Among the first recipients from Bangladesh in ASHRAE Region-at-Large.</span></div><time>2026 to 2027</time></li>
+        <li><div><strong>4th place, Intra BUET Robo Challenge</strong><span class="note">With SoccerBOT</span></div><time>2024</time></li>
+        <li><div><strong>Certificate of Excellence, Interplanetar Mechanical Course</strong><span class="note">Team Interplanetar, BUET</span></div><time>2024</time></li>
+        <li><div><strong>BUET Technical Scholarship</strong><span class="note">Merit scholarship, 2021 to 2022 and 2022 to 2023 sessions</span></div><time>2021 to 2023</time></li>
+        <li><div><strong>Government Talentpool Scholarship</strong><span class="note">At the Primary, Junior and Secondary School Certificate examinations</span></div></li>
+      </ul>
+
+      <div>
+        <p class="subhead">Certifications</p>
+        <ul class="rows">
+          <li><div><strong>Certified SOLIDWORKS Professional (CSWP)</strong><span class="note">Dassault Systèmes</span></div><time datetime="2026-01">Jan 2026</time></li>
+          <li><div><strong>SOLIDWORKS Associate in Simulation, Additive Manufacturing and Sustainability</strong><span class="note">Dassault Systèmes</span></div><time datetime="2025-09">Sep 2025</time></li>
+          <li><div><strong>Certified SOLIDWORKS Associate (CSWA)</strong><span class="note">Dassault Systèmes</span></div><time datetime="2024-11">Nov 2024</time></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="subhead">Workshops</p>
+        <p class="meta" style="margin:0">Shape-shift drones and drone technology (IMechE BUET, 2025), rover mechanics (Team Interplanetar, 2024), ANSYS for finite element and fluid analysis (BUET Automobile Club, 2023), mechanical research methods (MMMRN, 2023), and robotics (BUET Robotics Society, 2023).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="education">
+  <div class="wrap">
+    <div class="head">
+      <h2>Education</h2>
+    </div>
+    <div class="body">
+      <ul class="rows">
+        <li><div><strong>B.Sc. in Mechanical Engineering</strong><span class="note">Bangladesh University of Engineering and Technology, Dhaka. CGPA 3.57 out of 4.00 after six terms.</span></div><time>2022 to 2027</time></li>
+        <li><div><strong>Higher Secondary Certificate, Science</strong><span class="note">Notre Dame College, Dhaka. GPA 5.00 out of 5.00, ranked 25th of more than 2,000 students.</span></div><time>2019 to 2021</time></li>
+        <li><div><strong>Secondary School Certificate, Science</strong><span class="note">Mymensingh Zilla School. GPA 5.00 out of 5.00.</span></div><time>2019</time></li>
+      </ul>
+      <figure>
+        <img src="assets/department.jpg" alt="Pranto standing beside the Department of Mechanical Engineering sign at BUET" width="1288" height="952" loading="lazy">
+        <figcaption>Department of Mechanical Engineering, BUET.</figcaption>
+      </figure>
+
+      <div>
+        <p class="subhead">Experience</p>
+        <ul class="rows">
+          <li><div><strong>Industrial attachment trainee, Meghna Sugar Refineries Ltd.</strong><span class="note">Studied the refining line from decolourisation through evaporation and crystallisation, reviewed maintenance of centrifuges, dryers and the co-generation plant, and wrote technical reports on process control and utilities.</span></div><time>Jun 2026</time></li>
+          <li><div><strong>Independent academic tutor</strong><span class="note">Mentored more than 60 students in science and mathematics, and prepared students for engineering and medical university admission tests.</span></div><time>2022 to present</time></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="subhead">Skills</p>
+        <div class="skills">
+          <div><h3>Simulation and analysis</h3><p>LAMMPS, OVITO, ANSYS Fluent, ANSYS Mechanical</p></div>
+          <div><h3>Computing</h3><p>MPI parallel runs, Linux and WSL2, remote clusters</p></div>
+          <div><h3>Programming</h3><p>Python (NumPy, pandas, Matplotlib), C, C++, MATLAB</p></div>
+          <div><h3>Design and tools</h3><p>SolidWorks, AutoCAD, Arduino, Git, LaTeX</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block contact" id="contact">
+  <div class="wrap" style="display:block">
+    <h2>Let's talk research.</h2>
+    <a class="mail" href="mailto:praanto17@gmail.com">praanto17@gmail.com</a>
+    <div class="profiles">
+      <a href="https://www.linkedin.com/in/praaaanto/" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/praaaanto" rel="noopener">GitHub</a>
+      <a href="https://orcid.org/0009-0005-6870-2118" rel="noopener">ORCID</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Usman Gani Pranto</span>
+    <span>Last updated October 2026</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var canvas = document.getElementById('atoms');
+  var ctx = canvas.getContext('2d');
+  var btnR = document.getElementById('btn-random');
+  var btnC = document.getElementById('btn-cluster');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Seeded random so the sketch looks the same on every visit
+  var seed = 7;
+  function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+  function inCube() { return [rnd() * 1.7 - 0.85, rnd() * 1.7 - 0.85, rnd() * 1.7 - 0.85]; }
+  function inBall(c, r) {
+    var x, y, z;
+    do { x = rnd() * 2 - 1; y = rnd() * 2 - 1; z = rnd() * 2 - 1; } while (x * x + y * y + z * z > 1);
+    var k = r * Math.cbrt(rnd());
+    var n = Math.sqrt(x * x + y * y + z * z) || 1;
+    return [c[0] + x / n * k, c[1] + y / n * k, c[2] + z / n * k];
+  }
+
+  var small = window.innerWidth < 620;
+  var atoms = [];
+  var nTin = small ? 140 : 230;
+  for (var i = 0; i < nTin; i++) { var p = inCube(); atoms.push({ t: 0, a: p, b: p }); }
+
+  var agCenters = [[-0.45, -0.35, 0.3], [0.4, -0.5, -0.35], [0.1, 0.45, 0.45]];
+  var cuCenters = [[-0.5, 0.4, -0.4], [0.5, 0.25, 0.1]];
+  var per = small ? 16 : 22;
+  agCenters.forEach(function (c) { for (var j = 0; j < per; j++) atoms.push({ t: 1, a: inCube(), b: inBall(c, 0.2) }); });
+  cuCenters.forEach(function (c) { for (var j = 0; j < per; j++) atoms.push({ t: 2, a: inCube(), b: inBall(c, 0.2) }); });
+
+  var edges = [];
+  var v = [-0.95, 0.95];
+  var corners = [];
+  v.forEach(function (x) { v.forEach(function (y) { v.forEach(function (z) { corners.push([x, y, z]); }); }); });
+  for (var m = 0; m < 8; m++) for (var n2 = m + 1; n2 < 8; n2++) {
+    var d = 0; for (var k = 0; k < 3; k++) if (corners[m][k] !== corners[n2][k]) d++;
+    if (d === 1) edges.push([corners[m], corners[n2]]);
+  }
+
+  var colors = ['93,102,132', '179,173,245', '232,149,90'];
+  var radii = [2.1, 4.6, 4.6];
+  var mix = reduce ? 1 : 0, target = 1, angle = 0.6, w = 0, h = 0, dpr = 1, running = true, visible = true;
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var r = canvas.getBoundingClientRect();
+    w = r.width; h = r.height;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+
+  function project(p) {
+    var ca = Math.cos(angle), sa = Math.sin(angle);
+    var x = p[0] * ca + p[2] * sa, z = -p[0] * sa + p[2] * ca, y = p[1];
+    var tilt = 0.38, ct = Math.cos(tilt), st = Math.sin(tilt);
+    var y2 = y * ct - z * st, z2 = y * st + z * ct;
+    var s = 4.6 / (4.6 + z2), scale = Math.min(w, h) * 0.26;
+    return { x: w / 2 + x * scale * s, y: h / 2 + 18 + y2 * scale * s, z: z2, s: s };
+  }
+
+  function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(163,169,191,0.28)';
+    edges.forEach(function (e) {
+      var a = project(e[0]), b = project(e[1]);
+      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+    });
+    var k = ease(mix);
+    var list = atoms.map(function (at) {
+      var p = [at.a[0] + (at.b[0] - at.a[0]) * k, at.a[1] + (at.b[1] - at.a[1]) * k, at.a[2] + (at.b[2] - at.a[2]) * k];
+      var q = project(p); q.t = at.t; return q;
+    });
+    list.sort(function (a, b) { return b.z - a.z; });
+    list.forEach(function (q) {
+      var depth = Math.max(0.35, Math.min(1, 0.75 - q.z * 0.35));
+      ctx.beginPath();
+      ctx.arc(q.x, q.y, radii[q.t] * q.s, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(' + colors[q.t] + ',' + (q.t === 0 ? depth * 0.7 : depth) + ')';
+      ctx.fill();
+    });
+  }
+
+  var last = 0;
+  function frame(ts) {
+    if (!running) return;
+    var dt = last ? Math.min((ts - last) / 1000, 0.05) : 0; last = ts;
+    if (!reduce) {
+      angle += dt * 0.12;
+      if (mix !== target) {
+        var step = dt / 2.2;
+        mix = target > mix ? Math.min(target, mix + step) : Math.max(target, mix - step);
+      }
+    } else { mix = target; }
+    draw();
+    requestAnimationFrame(frame);
+  }
+
+  function setTarget(t) {
+    target = t;
+    btnR.setAttribute('aria-pressed', t === 0 ? 'true' : 'false');
+    btnC.setAttribute('aria-pressed', t === 1 ? 'true' : 'false');
+    if (reduce) { mix = t; draw(); }
+  }
+  btnR.addEventListener('click', function () { setTarget(0); });
+  btnC.addEventListener('click', function () { setTarget(1); });
+
+  function start() { if (reduce) return; if (!running && visible && !document.hidden) { running = true; last = 0; requestAnimationFrame(frame); } }
+  function stop() { running = false; }
+  document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) { visible = en[0].isIntersecting; visible ? start() : stop(); }).observe(canvas);
+  }
+  window.addEventListener('resize', resize);
+
+  resize();
+  if (reduce) { draw(); running = false; }
+  else {
+    // One orchestrated moment: atoms settle into precipitates shortly after load
+    target = 0;
+    requestAnimationFrame(frame);
+    setTimeout(function () { setTarget(1); }, 700);
+  }
+})();
+</script>
+</body>
+</html>

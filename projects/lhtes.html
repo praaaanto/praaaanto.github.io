@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Honeycomb Thermal Energy Storage | Usman Gani Pranto</title>
+<meta name="description" content="Design, fabrication, pressure testing and simulation of a honeycomb latent heat thermal energy storage unit for solar-assisted domestic hot water. ME 310 project and ASHRAE conference paper.">
+<meta property="og:title" content="Honeycomb latent heat thermal energy storage">
+<meta property="og:description" content="A paraffin storage module for solar hot water: designed, built, pressure tested and simulated at BUET.">
+<meta property="og:image" content="https://praaaanto.github.io/assets/lhtes/shell-open.jpg">
+<meta property="og:url" content="https://praaaanto.github.io/projects/lhtes.html">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#F4F5F7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B0E18'/%3E%3Ccircle cx='22' cy='26' r='9' fill='%23B3ADF5'/%3E%3Ccircle cx='42' cy='40' r='9' fill='%23E8955A'/%3E%3Ccircle cx='44' cy='18' r='4' fill='%235D6684'/%3E%3Ccircle cx='18' cy='46' r='4' fill='%235D6684'/%3E%3C/svg%3E">
+<script>(function(){var t='light';try{t=localStorage.getItem('theme')==='dark'?'dark':'light';}catch(e){}var d=document.documentElement;d.setAttribute('data-theme',t);d.classList.add('js');})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/case.css">
+<style>
+/* Problem infographic */
+.daychart{padding:22px 22px 14px}
+.daychart svg{display:block;width:100%;height:auto}
+.daychart .tick{font-family:var(--mono);font-size:11px;fill:var(--faint)}
+.daychart .lab{font-family:var(--body);font-size:13px;font-weight:600}
+.keyrow{display:flex;flex-wrap:wrap;gap:18px;font-size:14px;color:var(--muted);margin-top:8px}
+.keyrow span{display:inline-flex;align-items:center;gap:8px}
+.keyrow i{width:14px;height:10px;border-radius:3px;display:inline-block}
+
+/* Schematic */
+.schem{padding:clamp(18px,2.4vw,28px)}
+.schem-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.schem-top .meta{margin:0}
+.schem svg{display:block;width:100%;max-width:520px;margin:0 auto;height:auto}
+.sch-shell{fill:var(--panel-solid);stroke:var(--line-2);stroke-width:2}
+.sch-water{fill:color-mix(in srgb,var(--tin) 18%,var(--panel-solid));transition:fill 1.2s var(--ease)}
+.sch-cell{fill:var(--wax);stroke:var(--line-2);stroke-width:2;transition:fill 1.3s var(--ease)}
+.sch-noz{stroke:color-mix(in srgb,var(--tin) 35%,var(--panel-solid));stroke-width:16;stroke-linecap:butt;transition:stroke 1s var(--ease)}
+.sch-flow{stroke:var(--panel-solid);stroke-width:2.5;stroke-dasharray:6 10;fill:none;opacity:0;transition:opacity .6s}
+.sch-lab{font-family:var(--mono);font-size:12px;fill:var(--faint);letter-spacing:.06em}
+.charging .sch-water{fill:color-mix(in srgb,var(--copper) 42%,var(--panel-solid))}
+.charging .sch-noz.in{stroke:var(--copper)}
+.charging .sch-noz.out{stroke:color-mix(in srgb,var(--copper) 60%,var(--panel-solid))}
+.charging .sch-cell{fill:color-mix(in srgb,var(--copper) 78%,#fff)}
+.discharging .sch-water{fill:color-mix(in srgb,var(--silver) 30%,var(--panel-solid))}
+.discharging .sch-noz.in{stroke:var(--silver)}
+.discharging .sch-noz.out{stroke:color-mix(in srgb,var(--copper) 55%,var(--silver))}
+.charging .sch-flow,.discharging .sch-flow{opacity:.9;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-16}}
+.schem-legend{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;font-size:13.5px;color:var(--muted);margin-top:12px}
+.schem-legend span{display:inline-flex;align-items:center;gap:8px}
+.schem-legend i{width:14px;height:14px;display:inline-block;-webkit-mask:var(--hexfill) center/contain no-repeat;mask:var(--hexfill) center/contain no-repeat}
+.schem-status{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--copper);text-align:center;min-height:1.6em;margin-top:6px}
+
+/* Evolution */
+.evo{display:grid;grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr);gap:14px;align-items:stretch}
+.evo .card{padding:18px;display:flex;flex-direction:column}
+.evo .pic{background:#fff;border-radius:12px;border:1px solid var(--line);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:14px}
+.evo .pic img{width:92%;height:auto;border:0;border-radius:0}
+.evo b{display:block;font-weight:600;margin:6px 0 4px}
+.evo span{color:var(--muted);font-size:15px;line-height:1.5}
+.evo .arrowcol{display:flex;align-items:center;justify-content:center;color:var(--copper)}
+.evo .arrowcol svg{width:36px;height:36px}
+
+/* CFD scrubber */
+.cfd{padding:clamp(16px,2.2vw,24px)}
+.cfd-stage,.cfd-legend,.cfd-ctrl,.cfd-cap{max-width:560px;margin-left:auto;margin-right:auto}
+.cfd-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.cfd-stage{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);aspect-ratio:1000/987;background:#7f97df}
+.cfd-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0;border-radius:0;transition:opacity .45s var(--ease)}
+.cfd-stamp{position:absolute;left:14px;top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;background:rgba(11,14,24,.72);color:#fff;padding:7px 11px;border-radius:999px}
+.cfd-legend{display:flex;margin-top:12px;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.cfd-legend i{flex:1;height:8px;border-radius:99px;background:linear-gradient(90deg,#0000ff,#00ffff,#00ff00,#ffff00,#ff0000)}
+.cfd-legend.melt i{flex:none;width:14px;height:14px;border-radius:4px}
+.cfd-ctrl{display:flex;align-items:center;gap:14px;margin-top:14px;margin-bottom:0}
+.cfd-ctrl button{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line-2);background:var(--panel-solid);color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cfd-ctrl button:hover{border-color:var(--copper);color:var(--copper)}
+.cfd-ctrl svg{width:16px;height:16px}
+.cfd-ctrl input[type=range]{flex:1;accent-color:var(--copper);height:44px;cursor:pointer}
+.cfd-ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--faint);padding:0 4px 0 62px}
+.cfd-cap{margin-top:12px;margin-bottom:0;min-height:3.2em;color:var(--muted);font-size:15px}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<canvas id="field" aria-hidden="true"></canvas>
+<div class="glow" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="dot"></span><b>Usman Gani Pranto</b><small>/ ME, BUET</small></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#problem">Problem</a>
+      <a href="#design">Design</a>
+      <a href="#build">Build</a>
+      <a href="#test">Test</a>
+      <a href="#simulation">Simulation</a>
+      <a href="#team">Team</a>
+      <a class="cta" href="../index.html#projects">All projects</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+      <span class="sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span>
+      <span class="moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+<div class="wrap">
+  <div class="case-hero">
+    <div>
+      <ol class="crumbs" data-reveal>
+        <li><a href="../index.html">Index</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li aria-current="page">LHTES</li>
+      </ol>
+      <p class="eyebrow" data-reveal>Project<span class="count">01 of 04</span></p>
+      <h1 data-split>Honeycomb latent heat thermal energy storage</h1>
+      <p class="lede" data-reveal>A storage module that holds solar heat in melting paraffin wax, so hot water is ready in the morning and evening, long after the sun has peaked.</p>
+      <div class="factgrid" data-reveal>
+        <div class="fact"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></span><div><small>My role</small><b>Lead designer, fabrication lead, corresponding author</b></div></div>
+        <div class="fact"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/></svg></span><div><small>Context</small><b>ME 310 design project, BUET</b></div></div>
+        <div class="fact"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span><div><small>Paper</small><b>ASHRAE 2027 Winter Conference, under review</b></div></div>
+        <div class="fact"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></span><div><small>Tools</small><b>SolidWorks, ANSYS Fluent, workshop fabrication</b></div></div>
+      </div>
+    </div>
+
+    <figure class="showcase" data-reveal>
+      <div class="finder">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <span class="label l">Module</span><span class="label r" id="show-label">Refined design, CAD</span>
+        <div class="viewport">
+          <img id="show-cad" src="../assets/lhtes/cad-open.jpg" alt="CAD render of the refined 19-cell honeycomb storage module with the top plate removed" width="1138" height="696">
+          <img id="show-photo" class="photo" src="../assets/lhtes/shell-open.jpg" alt="The fabricated prototype seen from above with the cover plate off, showing welded hexagonal cells and four nozzles" width="1454" height="1600" hidden>
+        </div>
+      </div>
+      <div class="seg" role="group" aria-label="Show render or photo">
+        <button type="button" id="seg-cad" aria-pressed="true">Refined design</button>
+        <button type="button" id="seg-photo" aria-pressed="false">Built prototype</button>
+      </div>
+    </figure>
+  </div>
+</div>
+
+<section class="block" id="problem">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">The problem<span class="count">01</span></p>
+      <h2 data-split>Sun at noon, showers at dawn.</h2>
+      <p data-reveal>Solar heat arrives when households need it least. Storage has to carry it across the day.</p>
+    </div>
+    <div class="body">
+      <div class="card daychart" data-reveal>
+        <svg viewBox="0 0 640 250" role="img" aria-label="Illustrative chart of a day. Solar heat rises to a single peak around midday, while hot water demand shows two peaks, early morning and evening. An arrow shows storage shifting midday heat into the evening.">
+          <defs>
+            <linearGradient id="sunfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--copper)" stop-opacity=".45"/><stop offset="1" stop-color="var(--copper)" stop-opacity="0"/></linearGradient>
+            <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text)"/></marker>
+          </defs>
+          <line x1="30" y1="210" x2="620" y2="210" stroke="var(--line-2)"/>
+          <path d="M150 210 C 230 210, 260 40, 325 40 S 420 210, 500 210 Z" fill="url(#sunfill)" stroke="var(--copper)" stroke-width="2.5"/>
+          <path d="M70 210 C 95 210, 105 92, 135 92 S 175 210, 200 210" fill="none" stroke="var(--silver)" stroke-width="2.5" stroke-dasharray="6 5"/>
+          <path d="M440 210 C 470 210, 490 70, 525 70 S 570 210, 600 210" fill="none" stroke="var(--silver)" stroke-width="2.5" stroke-dasharray="6 5"/>
+          <path d="M345 30 C 420 6, 495 20, 520 52" fill="none" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/>
+          <text class="lab" x="400" y="16" fill="var(--text)">storage carries the heat</text>
+          <text class="lab" x="292" y="112" fill="var(--copper)">Solar heat</text>
+          <text class="lab" x="92" y="80" fill="var(--silver)">Morning</text>
+          <text class="lab" x="496" y="60" fill="var(--silver)">Evening</text>
+          <text class="tick" x="30" y="232">Night</text><text class="tick" x="118" y="232">Dawn</text><text class="tick" x="306" y="232">Noon</text><text class="tick" x="495" y="232">Dusk</text><text class="tick" x="580" y="232">Night</text>
+        </svg>
+        <div class="keyrow"><span><i style="background:var(--copper)"></i>Solar heat collected</span><span><i style="background:var(--silver)"></i>Hot water drawn</span><span style="margin-left:auto;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase">Illustrative</span></div>
+      </div>
+
+      <div class="keypoints" data-reveal>
+        <div class="card kp"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-1 7a5 5 0 01-10 0z"/><path d="M12 15v6M8 21h8"/></svg></span><b>Water tanks are bulky</b><span>Storing heat as warm water works, but it needs a lot of volume.</span></div>
+        <div class="card kp"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 7 6 11a6 6 0 01-12 0c0-4 3-7 6-11z"/></svg></span><b>Melting wax is dense</b><span>Paraffin stores far more heat per volume as it melts, right at hot water temperatures.</span></div>
+        <div class="card kp"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h4l2-5 4 10 2-5h4"/></svg></span><b>But it conducts poorly</b><span>The real design problem is moving heat in and out of the wax fast enough.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="design">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">The design<span class="count">02</span></p>
+      <h2 data-split>Why a honeycomb.</h2>
+      <p data-reveal>Paraffin sits in sealed hexagonal cells. Hot water flows through the gaps between them.</p>
+    </div>
+    <div class="body">
+      <div class="why" data-reveal>
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8 3l4 2.3v4.6L8 12.2 4 9.9V5.3zM16 3l4 2.3v4.6l-4 2.3-4-2.3V5.3zM12 10l4 2.3v4.6l-4 2.3-4-2.3v-4.6z"/></svg></span><div><b>Tiles with no dead space</b><span>Hexagons pack without voids, so no volume is wasted between cells.</span></div></div>
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V8l8-5 8 5v12"/><path d="M4 12h16M12 3v17"/></svg></span><div><b>Thin walls that carry load</b><span>Every wall is shared and loaded in its own plane, so thin sheet works without stiffeners.</span></div></div>
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8c3 0 3 2 6 2s3-2 6-2 3 2 6 2M3 14c3 0 3 2 6 2s3-2 6-2 3 2 6 2"/></svg></span><div><b>Gaps become channels</b><span>The even gap between neighbouring cells is the water passage. No extra structure needed.</span></div></div>
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8M9 12h6"/></svg></span><div><b>One lid closes every cell</b><span>Cells are as tall as the shell, so the top and bottom plates seal them all at once.</span></div></div>
+      </div>
+      <div class="note" data-reveal><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg></span><span>An honest caveat from the paper: hexagons are not the best shape for heat transfer area. They were chosen because they can be rolled and welded from plain sheet in a small workshop.</span></div>
+
+      <div class="card schem" data-reveal id="schem">
+        <div class="schem-top">
+          <p class="meta">How it works, schematic top view</p>
+          <div class="seg" role="group" aria-label="Operating mode" style="margin-top:0">
+            <button type="button" data-mode="charging" aria-pressed="false">Charge</button>
+            <button type="button" data-mode="discharging" aria-pressed="false">Discharge</button>
+          </div>
+        </div>
+        <svg id="schem-svg" viewBox="-250 -250 500 500" role="img" aria-label="Top view of the module: a round shell holding nineteen hexagonal paraffin cells, three inlet nozzles at the top and one outlet at the bottom right. Charging turns the water and cells copper; discharging cools them."></svg>
+        <p class="schem-status" id="schem-status" aria-live="polite">Press Charge to send hot water through the module.</p>
+        <div class="schem-legend">
+          <span><i style="background:var(--wax)"></i>Solid paraffin</span>
+          <span><i style="background:color-mix(in srgb,var(--copper) 78%,#fff)"></i>Melted paraffin</span>
+          <span><i style="background:var(--copper)"></i>Hot water</span>
+          <span><i style="background:var(--silver)"></i>Cool water</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="process">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">The journey<span class="count">03</span></p>
+      <h2 data-split>From course project to paper.</h2>
+      <p data-reveal>Each stage, in order.</p>
+    </div>
+    <div class="body">
+      <ol class="steps" data-reveal>
+        <li class="step"><span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0012 3z"/></svg></span><small>Oct 2025</small><b>Concept</b><span>Idea framed in ME 310, Heat Transfer Equipment Design.</span></li>
+        <li class="step"><span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 22V12M21 7l-9 5-9-5"/></svg></span><small>Design</small><b>CAD iterations</b><span>Three SolidWorks versions before the build layout.</span></li>
+        <li class="step"><span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c2 3 5 5 5 9a5 5 0 01-10 0c0-2 1-3.5 2-4.5.5 1.5 1.5 2.5 3 2.5-1-2-1-4 0-7z"/></svg></span><small>Workshop</small><b>Fabrication</b><span>Cells welded, shell finished, nozzles brazed.</span></li>
+        <li class="step"><span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 13l4-4M12 3v2"/></svg></span><small>1 Apr 2026</small><b>Pressure test</b><span>Held 100 psi in the department's hydraulic test.</span></li>
+        <li class="step"><span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8"/></svg></span><small>8 Apr 2026</small><b>Final review</b><span>Design and prototype presented to evaluators.</span></li>
+        <li class="step"><span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18M15 3v18"/></svg></span><small>Analysis</small><b>Simulation</b><span>Transient CFD of the refined design.</span></li>
+        <li class="step"><span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5"/></svg></span><small>2 Sep 2026</small><b>Manuscript</b><span>Full paper submitted after the abstract was accepted.</span></li>
+        <li class="step now"><span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><small>Now</small><b>Under review</b><span>Target: ASHRAE 2027 Winter Conference, Chicago.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="evolution">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Evolution<span class="count">04</span></p>
+      <h2 data-split>Built, then refined.</h2>
+      <p data-reveal>The prototype taught us what to tighten.</p>
+    </div>
+    <div class="body">
+      <div class="evo" data-reveal>
+        <div class="card"><div class="pic"><img src="../assets/lhtes/cad-v12.jpg" alt="CAD render of the prototype layout with widely spaced cells" width="691" height="476" loading="lazy"></div><span class="chip dot done" style="align-self:flex-start">Built and tested</span><b>Prototype layout</b><span>Cells stand apart on the base plate inside a flanged shell. This is the unit we fabricated and pressure tested.</span></div>
+        <div class="arrowcol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
+        <div class="card"><div class="pic"><img src="../assets/lhtes/cad-open.jpg" alt="CAD render of the refined 19-cell honeycomb layout" width="1138" height="696" loading="lazy"></div><span class="chip dot review" style="align-self:flex-start">Analysed in the paper</span><b>Refined design, 19 cells</b><span>Cells pack on a tight honeycomb pitch, so the gaps between neighbours become the water channels.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="build">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">The build<span class="count">05</span></p>
+      <h2 data-split>Made in a workshop.</h2>
+      <p data-reveal>Stainless sheet, welded cells, brazed fittings. Tap any photo to enlarge.</p>
+    </div>
+    <div class="body">
+      <div class="gal" data-reveal data-gallery>
+        <figure><button type="button"><img src="../assets/lhtes/shell-open.jpg" alt="Prototype shell from above with welded hexagonal cells" width="1454" height="1600" loading="lazy"></button><figcaption>Shell with the welded hexagonal cells</figcaption></figure>
+        <figure><button type="button"><img src="../assets/lhtes/brazing.jpg" alt="A technician brazing a nozzle fitting onto the shell" width="1600" height="1164" loading="lazy"></button><figcaption>Brazing a nozzle fitting</figcaption></figure>
+        <figure><button type="button"><img src="../assets/lhtes/fitting.jpg" alt="Close-up of a stainless inlet nozzle with a threaded fitting" width="1197" height="1600" loading="lazy"></button><figcaption>Stainless inlet nozzle and fitting</figcaption></figure>
+        <figure><button type="button"><img src="../assets/lhtes/cover-plate.jpg" alt="The bolted stainless cover plate" width="1600" height="1523" loading="lazy"></button><figcaption>Bolted stainless cover plate</figcaption></figure>
+        <figure><button type="button"><img src="../assets/lhtes/brazing-close.jpg" alt="Close view of the brazing torch on a fitting" width="1200" height="1600" loading="lazy"></button><figcaption>Torch work up close</figcaption></figure>
+        <figure><button type="button"><img src="../assets/lhtes/gasket.jpg" alt="Gasket sheet laid over a cover plate" width="1600" height="1323" loading="lazy"></button><figcaption>Gasket and cover plate</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="test">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">The test<span class="count">06</span></p>
+      <h2 data-split>Will it hold?</h2>
+      <p data-reveal>Before any heat goes in, the sealed unit is pressurised with water to check every weld and joint.</p>
+    </div>
+    <div class="body">
+      <div class="callout" data-reveal><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><div><b>Passed the hydraulic pressure test</b><span>Held 100 psi. Signed off by the Department of Mechanical Engineering lab, 1 April 2026.</span></div></div>
+      <div class="gal" data-reveal data-gallery>
+        <figure><button type="button"><img src="../assets/lhtes/pressure-test.jpg" alt="Team members bolting the sealed unit onto the hydraulic test rig" width="1600" height="1332" loading="lazy"></button><figcaption>Sealed unit on the test rig</figcaption></figure>
+        <figure><button type="button"><img src="../assets/lhtes/gauges.jpg" alt="Pressure gauges on the rig during the test" width="1126" height="1600" loading="lazy"></button><figcaption>Gauges during the hold</figcaption></figure>
+        <figure><button type="button"><img src="../assets/lhtes/test-pump.jpg" alt="Red hand-operated hydraulic test pump" width="1200" height="1600" loading="lazy"></button><figcaption>Hand-operated test pump</figcaption></figure>
+        <figure><button type="button"><img src="../assets/lhtes/pressure-test-2.jpg" alt="Checking the unit for leaks while under pressure" width="1200" height="1600" loading="lazy"></button><figcaption>Checking for leaks under pressure</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="simulation">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">The simulation<span class="count">07</span></p>
+      <h2 data-split>Watching it melt.</h2>
+      <p data-reveal>A transient CFD model of the refined design in ANSYS Fluent 2024 R1 follows hot water and the melting front through the module. Drag the slider or press play.</p>
+    </div>
+    <div class="body">
+      <div class="card cfd" data-reveal>
+        <div class="cfd-head">
+          <p class="meta" style="margin:0">Mid-height plane, during charging</p>
+          <div class="seg" role="group" aria-label="Field shown" style="margin-top:0">
+            <button type="button" data-set="t" aria-pressed="true">Temperature</button>
+            <button type="button" data-set="m" aria-pressed="false">Melt state</button>
+          </div>
+        </div>
+        <div class="cfd-stage">
+          <img id="cfd-a" src="../assets/lhtes/cfd-t01.jpg" alt="" width="1000" height="987">
+          <img id="cfd-b" src="../assets/lhtes/cfd-t01.jpg" alt="" width="1000" height="987" style="opacity:0">
+          <span class="cfd-stamp" id="cfd-stamp">t = 1.5 s</span>
+        </div>
+        <div class="cfd-legend" id="cfd-legend"><span>Cooler</span><i></i><span>Hotter</span></div>
+        <div class="cfd-ctrl">
+          <button type="button" id="cfd-play" aria-label="Play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg></button>
+          <input type="range" id="cfd-range" min="0" max="6" value="0" step="1" aria-label="Simulation time">
+        </div>
+        <p class="cfd-cap" id="cfd-cap" aria-live="polite"></p>
+      </div>
+      <p class="meta" data-reveal>Qualitative view only. Values and the full analysis are in the paper, which is under review.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="team">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">People<span class="count">08</span></p>
+      <h2 data-split>My part, our team.</h2>
+      <p data-reveal>A five-person ME 310 group, supervised at BUET.</p>
+    </div>
+    <div class="body">
+      <div class="roles4" data-reveal>
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 22V12M21 7l-9 5-9-5"/></svg></span><div><b>Designed the unit</b><span>Layout, cell geometry and the SolidWorks model.</span></div></div>
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></span><div><b>Led fabrication</b><span>Took the design through the workshop and the pressure test.</span></div></div>
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span><div><b>Wrote the paper</b><span>Corresponding author on the ASHRAE manuscript.</span></div></div>
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8M7 12l3-3 2 2 4-4"/></svg></span><div><b>Told the story</b><span>Designed the poster and the presentation slides.</span></div></div>
+      </div>
+
+      <figure data-reveal>
+        <img src="../assets/lhtes/team.jpg" alt="The five team members standing beside the prototype at the Department of Mechanical Engineering" width="1600" height="1574" loading="lazy">
+        <figcaption>The team with the prototype, Department of Mechanical Engineering, BUET</figcaption>
+      </figure>
+
+      <div class="duo" data-reveal>
+        <figure><img src="../assets/lhtes/presenting.jpg" alt="Pranto presenting the CAD design slide in a classroom" width="1600" height="1505" loading="lazy"><figcaption>Presenting the CAD design, 8 April 2026</figcaption></figure>
+        <figure><img src="../assets/lhtes/review.jpg" alt="The team discussing the project with evaluators" width="1600" height="1301" loading="lazy"><figcaption>Discussion with the evaluators</figcaption></figure>
+      </div>
+
+      <div class="credits" data-reveal>
+        <div><small>Team</small><p>Sheikh Md. Shahriar Ahmed Sohan, Usman Gani Pranto, Md. Fahim Faisal, Md. Sakib Hasan Kafi, Khan Mohammad Ar-Rafi</p></div>
+        <div><small>Supervisor</small><p>Saifuddin Zafar, Lecturer, Department of Mechanical Engineering, BUET</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="paper">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Publication<span class="count">09</span></p>
+      <h2 data-split>The paper.</h2>
+    </div>
+    <div class="body">
+      <article class="card pub" data-reveal>
+        <div class="year">2027</div>
+        <div>
+          <p class="kind">Conference paper, thermal energy storage</p>
+          <p class="title">Design and Development of a Honeycomb-Based Latent Heat Thermal Energy Storage (LHTES) Unit Using Paraffin PCM for Solar-Assisted Domestic Hot Water Systems</p>
+          <p class="authors">Sohan, S. M. S. A., <strong>Pranto, U. G.*</strong>, Faisal, M. F., Kafi, M. S. H. and Ar-Rafi, K. M. &nbsp;*Corresponding author</p>
+          <p class="venue">ASHRAE 2027 Winter Conference, Chicago, Illinois</p>
+          <span class="chip dot review">Manuscript under review</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <nav class="pager" aria-label="More work">
+    <a class="card" href="../index.html#projects"><small>Back</small><b>All projects</b></a>
+    <a class="card" href="../index.html#research"><small>Next up</small><b>Thesis research</b></a>
+  </nav>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fbar">
+      <span>&copy; 2026 Usman Gani Pranto. Last updated October 2026.</span>
+      <button type="button" id="totop">Back to top &uarr;</button>
+    </div>
+  </div>
+  <div class="giant" aria-hidden="true">PRANTO</div>
+</footer>
+
+<dialog class="lb" id="lb" aria-label="Photo viewer">
+  <div class="lb-inner"><img id="lb-img" src="" alt=""><p id="lb-cap"></p></div>
+  <button class="lb-btn lb-close" type="button" id="lb-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <button class="lb-btn lb-prev" type="button" id="lb-prev" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+  <button class="lb-btn lb-next" type="button" id="lb-next" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+</dialog>
+
+<script src="../assets/site.js"></script>
+<script src="../assets/case.js"></script>
+<script>
+(function () {
+  var reduce = window.SITE.reduce;
+
+  /* Hero: render vs built prototype */
+  var cad = document.getElementById('show-cad'), photo = document.getElementById('show-photo'), lab = document.getElementById('show-label');
+  var bC = document.getElementById('seg-cad'), bP = document.getElementById('seg-photo');
+  function show(p) {
+    photo.hidden = !p; cad.hidden = p;
+    photo.style.opacity = p ? 1 : 0; cad.style.opacity = p ? 0 : 1;
+    bC.setAttribute('aria-pressed', p ? 'false' : 'true'); bP.setAttribute('aria-pressed', p ? 'true' : 'false');
+    lab.textContent = p ? 'Built prototype, photo' : 'Refined design, CAD';
+  }
+  bC.addEventListener('click', function () { show(false); });
+  bP.addEventListener('click', function () { show(true); });
+
+  /* Schematic: 19 flat-top hexagons in a centred hexagonal array, 3 inlets, 1 outlet */
+  var NS = 'http://www.w3.org/2000/svg', svg = document.getElementById('schem-svg');
+  function el(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; }
+  svg.appendChild(el('circle', { cx: 0, cy: 0, r: 182, class: 'sch-shell' }));
+  svg.appendChild(el('circle', { cx: 0, cy: 0, r: 174, class: 'sch-water' }));
+  var inlets = [167, 120, 67], outlet = -60, nozzles = [];
+  function nozzle(deg, isIn) {
+    var a = deg * Math.PI / 180, c = Math.cos(a), s = -Math.sin(a);
+    var g = el('g', {});
+    g.appendChild(el('line', { x1: c * 176, y1: s * 176, x2: c * 236, y2: s * 236, class: 'sch-noz ' + (isIn ? 'in' : 'out') }));
+    var f = isIn ? [c * 236, s * 236, c * 176, s * 176] : [c * 176, s * 176, c * 236, s * 236];
+    g.appendChild(el('line', { x1: f[0], y1: f[1], x2: f[2], y2: f[3], class: 'sch-flow' }));
+    svg.appendChild(g);
+    nozzles.push({ x: c * 176, y: s * 176, isIn: isIn });
+  }
+  inlets.forEach(function (d) { nozzle(d, true); }); nozzle(outlet, false);
+  var R = 34.64, P = 64, cells = [];
+  [-2, -1, 0, 1, 2].forEach(function (col) {
+    var n = 5 - Math.abs(col), x = col * P * Math.sqrt(3) / 2;
+    for (var i = 0; i < n; i++) {
+      var y = (i - (n - 1) / 2) * P, pts = [];
+      for (var k = 0; k < 6; k++) { var t = k * Math.PI / 3; pts.push((x + R * Math.cos(t)).toFixed(2) + ',' + (y + R * Math.sin(t)).toFixed(2)); }
+      var poly = el('polygon', { points: pts.join(' '), class: 'sch-cell' });
+      var d = Math.min.apply(null, nozzles.filter(function (z) { return z.isIn; }).map(function (z) { return Math.hypot(z.x - x, z.y - y); }));
+      poly.style.transitionDelay = (d / 330 * 1.8).toFixed(2) + 's';
+      svg.appendChild(poly); cells.push(poly);
+    }
+  });
+  var labs = [['3 inlets', -200, -175], ['1 outlet', 120, 225]];
+  labs.forEach(function (l) { var t = el('text', { x: l[1], y: l[2], class: 'sch-lab' }); t.textContent = l[0]; svg.appendChild(t); });
+  var schem = document.getElementById('schem'), status = document.getElementById('schem-status');
+  var modeBtns = schem.querySelectorAll('[data-mode]');
+  var msgs = { charging: 'Charging: hot water from the solar loop melts the paraffin, storing heat.', discharging: 'Discharging: cool water draws the heat back out as the paraffin solidifies.' };
+  function setMode(m) {
+    schem.classList.remove('charging', 'discharging'); if (m) schem.classList.add(m);
+    modeBtns.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-mode') === m ? 'true' : 'false'); });
+    status.textContent = msgs[m] || '';
+  }
+  modeBtns.forEach(function (b) { b.addEventListener('click', function () { setMode(b.getAttribute('data-mode')); }); });
+  if ('IntersectionObserver' in window && !reduce) {
+    var once = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { setTimeout(function () { setMode('charging'); }, 600); once.disconnect(); } }, { threshold: 0.5 });
+    once.observe(schem);
+  }
+
+  /* CFD scrubber */
+  var sets = {
+    t: { frames: ['t01', 't02', 't03', 't04', 't05', 't06', 't07'], times: ['1.5 s', '6 s', '12 s', '24 s', '1 min', '2 min 40 s', '5 min'],
+      caps: ['Hot water enters through the three inlets as narrow jets.', 'The jets spread into the ring-shaped gap around the cells.', 'The outer ring fills and wraps around the outermost cells.', 'Hot water now reaches every channel between the cells.', 'Cells warm from their walls inward. Their cores are still cold.', 'Cells nearest the inlets reach melting first.', 'Most cells are hot. The few far from the inlets still hold cold cores.'] },
+    m: { frames: ['m01', 'm02', 'm03'], times: ['1.5 s', '2 min 40 s', '5 min'],
+      caps: ['All paraffin is solid at the start.', 'The first cells, near the inlets, have fully melted.', 'Most cells have melted. The rest still hold a solid core.'] }
+  };
+  var cur = 't', idx = 0, front = document.getElementById('cfd-a'), back = document.getElementById('cfd-b');
+  var range = document.getElementById('cfd-range'), stamp = document.getElementById('cfd-stamp'), cap = document.getElementById('cfd-cap'), legend = document.getElementById('cfd-legend'), play = document.getElementById('cfd-play');
+  Object.keys(sets).forEach(function (k) { sets[k].frames.forEach(function (f) { var i = new Image(); i.src = '../assets/lhtes/cfd-' + f + '.jpg'; }); });
+  function render() {
+    var s = sets[cur], src = '../assets/lhtes/cfd-' + s.frames[idx] + '.jpg';
+    back.src = src; back.alt = (cur === 't' ? 'Temperature field' : 'Melt state') + ' at ' + s.times[idx] + '. ' + s.caps[idx];
+    back.style.opacity = 1; front.style.opacity = 0;
+    var tmp = front; front = back; back = tmp;
+    stamp.textContent = 't = ' + s.times[idx]; cap.textContent = s.caps[idx]; range.value = idx;
+  }
+  function setSet(k) {
+    cur = k; idx = 0; range.max = sets[k].frames.length - 1;
+    document.querySelectorAll('[data-set]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-set') === k ? 'true' : 'false'); });
+    legend.className = 'cfd-legend' + (k === 'm' ? ' melt' : '');
+    legend.innerHTML = k === 'm' ? '<i style="background:#0000ff"></i><span>Solid paraffin</span><i style="background:#ff1a00;margin-left:12px"></i><span>Melted paraffin, and water</span>' : '<span>Cooler</span><i></i><span>Hotter</span>';
+    render();
+  }
+  document.querySelectorAll('[data-set]').forEach(function (b) { b.addEventListener('click', function () { stop(); setSet(b.getAttribute('data-set')); }); });
+  range.addEventListener('input', function () { stop(); idx = +range.value; render(); });
+  var timer = null;
+  var playIco = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg>', pauseIco = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
+  function stop() { if (timer) { clearInterval(timer); timer = null; play.innerHTML = playIco; play.setAttribute('aria-label', 'Play'); } }
+  play.addEventListener('click', function () {
+    if (timer) { stop(); return; }
+    if (idx >= sets[cur].frames.length - 1) { idx = -1; }
+    play.innerHTML = pauseIco; play.setAttribute('aria-label', 'Pause');
+    function next() { idx++; render(); if (idx >= sets[cur].frames.length - 1) stop(); }
+    next(); timer = setInterval(next, 1400);
+  });
+  setSet('t');
+
+})();
+</script>
+</body>
+</html>

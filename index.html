@@ -1,0 +1,1031 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Usman Gani Pranto | Mechanical Engineering, BUET</title>
+<meta name="description" content="Usman Gani Pranto is a final-year mechanical engineering student at BUET working on atomistic molecular dynamics of solder joint reliability and latent heat thermal energy storage.">
+<meta property="og:title" content="Usman Gani Pranto">
+<meta property="og:description" content="Atomistic simulation of solder joint reliability, thermal energy storage, and engineering leadership at BUET.">
+<meta property="og:image" content="https://praaaanto.github.io/assets/portrait.jpg">
+<meta property="og:url" content="https://praaaanto.github.io/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0B0E18">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B0E18'/%3E%3Ccircle cx='22' cy='26' r='9' fill='%23B3ADF5'/%3E%3Ccircle cx='42' cy='40' r='9' fill='%23E8955A'/%3E%3Ccircle cx='44' cy='18' r='4' fill='%235D6684'/%3E%3Ccircle cx='18' cy='46' r='4' fill='%235D6684'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+:root{
+  --ink:#0B0E18;
+  --panel:rgba(18,23,41,.72);
+  --panel-solid:#121729;
+  --line:#232A41;
+  --line-2:#323A56;
+  --text:#E8E9F1;
+  --muted:#A3A9BF;
+  --faint:#6E7590;
+  --copper:#E8955A;
+  --silver:#B3ADF5;
+  --tin:#5D6684;
+  --ok:#8BE0A8;
+  --display:'Syne','Arial Narrow',sans-serif;
+  --body:'Instrument Sans','Segoe UI',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,'Cascadia Mono',Consolas,monospace;
+  --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --wrap:1200px;
+  --gutter:clamp(20px,5vw,56px);
+  --ease:cubic-bezier(.2,.7,.1,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:92px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.65;overflow-x:hidden;padding-bottom:env(safe-area-inset-bottom,0px)}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--text);text-decoration-color:var(--copper);text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover{color:var(--copper)}
+:focus-visible{outline:2px solid var(--copper);outline-offset:3px;border-radius:3px}
+::selection{background:var(--copper);color:var(--ink)}
+.skip{position:absolute;left:-999px;top:12px;background:var(--copper);color:var(--ink);padding:10px 16px;z-index:200}
+.skip:focus{left:12px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+main,footer{position:relative;z-index:2}
+
+/* Ambient layers */
+#field{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.glow{position:fixed;left:0;top:0;width:720px;height:720px;margin:-360px 0 0 -360px;border-radius:50%;background:radial-gradient(circle,rgba(179,173,245,.10) 0%,rgba(232,149,90,.05) 35%,transparent 68%);z-index:1;pointer-events:none;will-change:transform;transform:translate(50vw,30vh)}
+.progress{position:fixed;left:0;top:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--silver),var(--copper));z-index:120}
+
+/* Cursor */
+.cursor-ring,.cursor-dot{position:fixed;left:0;top:0;pointer-events:none;z-index:150;border-radius:50%;opacity:0;transition:opacity .3s}
+.cursor-ring{width:36px;height:36px;margin:-18px 0 0 -18px;border:1px solid rgba(232,233,241,.45);transition:opacity .3s,width .25s var(--ease),height .25s var(--ease),margin .25s var(--ease),border-color .25s,background-color .25s}
+.cursor-dot{width:6px;height:6px;margin:-3px 0 0 -3px;background:var(--copper)}
+body.has-cursor .cursor-ring,body.has-cursor .cursor-dot{opacity:1}
+body.cursor-hover .cursor-ring{width:56px;height:56px;margin:-28px 0 0 -28px;border-color:var(--copper);background-color:rgba(232,149,90,.08)}
+body.cursor-down .cursor-ring{width:28px;height:28px;margin:-14px 0 0 -14px}
+
+/* Navigation */
+.top{position:sticky;top:0;z-index:100;background:rgba(11,14,24,.78);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;height:70px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;white-space:nowrap}
+.brand .dot{width:8px;height:8px;border-radius:50%;background:var(--copper);box-shadow:0 0 0 4px rgba(232,149,90,.15)}
+.brand b{font-family:var(--display);font-weight:700;font-size:17px}
+.brand small{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.06em}
+.nav{display:flex;align-items:center;gap:24px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{position:relative;font-size:15px;color:var(--muted);text-decoration:none;white-space:nowrap;padding:12px 0}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:4px;height:1.5px;background:var(--copper);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.nav a:hover,.nav a.active{color:var(--text)}
+.nav a.active::after{transform:scaleX(1)}
+.nav .cta{padding:9px 16px;border:1px solid var(--line-2);border-radius:999px;color:var(--text);font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.nav .cta::after{display:none}
+.nav .cta:hover{border-color:var(--copper);color:var(--copper)}
+
+/* Shared atoms */
+.eyebrow{display:flex;align-items:center;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper);margin:0 0 18px}
+.eyebrow .rule{width:32px;height:1px;background:currentColor}
+.eyebrow .count{color:var(--faint)}
+.pill{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12.5px;color:var(--ok);padding:8px 14px;border:1px solid rgba(139,224,168,.28);background:rgba(139,224,168,.06);border-radius:999px;margin:0 0 28px}
+.pulse{position:relative;width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.pulse::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--ok);animation:pulse 2.2s ease-out infinite}
+@keyframes pulse{from{transform:scale(1);opacity:.7}to{transform:scale(3);opacity:0}}
+.chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:999px;border:1px solid var(--line-2);color:var(--muted);white-space:nowrap}
+.chip.dot::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.chip.done{color:var(--ok);border-color:rgba(139,224,168,.32);background:rgba(139,224,168,.06)}
+.chip.live{color:var(--copper);border-color:rgba(232,149,90,.36);background:rgba(232,149,90,.07)}
+.chip.review{color:var(--silver);border-color:rgba(179,173,245,.36);background:rgba(179,173,245,.07)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;font-weight:600;font-size:15.5px;text-decoration:none;border:1px solid var(--line-2);background:transparent;color:var(--text);cursor:pointer;font-family:var(--body);transition:border-color .25s,background-color .25s,color .25s,transform .25s var(--ease)}
+.btn .arr{transition:transform .3s var(--ease)}
+.btn:hover .arr{transform:translateX(4px)}
+.btn.primary{background:var(--copper);border-color:var(--copper);color:var(--ink)}
+.btn.primary:hover{background:#F2A66F;color:var(--ink)}
+.btn:not(.primary):hover{border-color:var(--copper);color:var(--text)}
+.btn.sm{min-height:42px;padding:0 18px;font-size:14px}
+
+/* Reveal system */
+.js [data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.js [data-reveal].in{opacity:1;transform:none}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.w > span{display:inline-block;transform:translateY(105%);transition:transform .9s var(--ease)}
+.in .w > span,.w.in > span{transform:none}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(28px,4vw,72px);align-items:center;padding:clamp(48px,7vw,96px) 0 clamp(56px,7vw,96px)}
+.hello{font-family:var(--mono);font-size:14px;color:var(--muted);display:flex;align-items:center;gap:14px;margin:0 0 18px}
+.hello::before{content:"";width:40px;height:1px;background:var(--copper)}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(48px,7.6vw,108px);line-height:.95;letter-spacing:-.03em;margin:0 0 28px}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .line > span{display:inline-block;background:linear-gradient(180deg,#FFFFFF 0%,#D7D9E3 48%,#8C92A8 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.js .hero h1 .line > span{transform:translateY(105%);animation:rise 1.1s var(--ease) forwards}
+.js .hero h1 .line:nth-child(2) > span{animation-delay:.12s}
+@keyframes rise{to{transform:none}}
+.lede{font-size:clamp(19px,1.9vw,23px);line-height:1.5;max-width:30ch;margin:0 0 14px}
+.sublede{color:var(--muted);max-width:48ch;margin:0 0 32px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:28px}
+.profiles{display:flex;flex-wrap:wrap;gap:22px;font-size:15px}
+.profiles a{color:var(--muted)}
+.profiles a:hover{color:var(--copper)}
+
+.finder{position:relative;padding:30px 14px 14px}
+.finder .corner{position:absolute;width:18px;height:18px;border-color:var(--line-2);border-style:solid;border-width:0}
+.finder .tl{left:0;top:0;border-left-width:1px;border-top-width:1px}
+.finder .tr{right:0;top:0;border-right-width:1px;border-top-width:1px}
+.finder .bl{left:0;bottom:0;border-left-width:1px;border-bottom-width:1px}
+.finder .br{right:0;bottom:0;border-right-width:1px;border-bottom-width:1px}
+.finder .label{position:absolute;top:4px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.finder .label.l{left:26px}.finder .label.r{right:26px}
+.viewport{position:relative;background:radial-gradient(circle at 50% 45%,#151B30 0%,rgba(11,14,24,.9) 70%);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.viewport canvas{display:block;width:100%;aspect-ratio:1/1}
+.switch{position:absolute;left:16px;top:16px;display:flex;gap:6px;background:rgba(11,14,24,.78);border:1px solid var(--line);border-radius:999px;padding:5px;max-width:calc(100% - 32px)}
+.switch button{appearance:none;border:0;background:transparent;color:var(--muted);font:500 14px/1 var(--body);padding:11px 14px;border-radius:999px;cursor:pointer;min-height:40px;transition:background-color .3s,color .3s}
+.switch button[aria-pressed="true"]{background:var(--text);color:var(--ink)}
+.legend{position:absolute;left:18px;bottom:16px;display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.readout{position:absolute;right:18px;bottom:16px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--faint);text-transform:uppercase}
+.caption{font-size:14px;color:var(--muted);margin:14px 4px 0;max-width:60ch}
+.scroll-cue{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding-bottom:28px}
+.scroll-cue i{position:relative;width:1px;height:36px;background:var(--line-2);overflow:hidden}
+.scroll-cue i::after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--copper);animation:cue 2s var(--ease) infinite}
+@keyframes cue{to{top:100%}}
+
+/* Sections */
+section.block{border-top:1px solid var(--line);padding:clamp(64px,9vw,112px) 0}
+.block > .wrap{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:clamp(28px,5vw,80px)}
+.head{align-self:start;position:sticky;top:110px}
+.head h2{font-family:var(--display);font-weight:700;font-size:clamp(34px,3.8vw,50px);line-height:1.04;letter-spacing:-.02em;margin:0 0 14px}
+.head p{color:var(--muted);margin:0;font-size:16px;max-width:34ch}
+.head .eyebrow{color:var(--copper);margin:0 0 18px;font-size:12px;max-width:none}
+.body > * + *{margin-top:44px}
+h3{font-family:var(--display);font-weight:700;font-size:clamp(21px,2vw,25px);line-height:1.25;margin:0 0 6px;letter-spacing:-.005em}
+.meta{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--faint);margin:0 0 14px}
+p{margin:0 0 14px;max-width:68ch}
+ul.points{margin:0;padding-left:20px;max-width:68ch}
+ul.points li{margin-bottom:8px}
+ul.points li::marker{color:var(--copper)}
+.subhead{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 16px}
+.subhead::after{content:"";flex:1;height:1px;background:var(--line)}
+figure{margin:0}
+figure img{border-radius:16px;border:1px solid var(--line)}
+figcaption{font-family:var(--mono);font-size:12px;color:var(--faint);margin-top:12px;letter-spacing:.02em}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;transition:border-color .35s,background-color .35s,transform .35s var(--ease)}
+.card:hover{border-color:var(--line-2);background:rgba(22,28,49,.82)}
+
+/* About */
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);gap:44px;align-items:start}
+.about .finder{padding:28px 12px 12px}
+.about .finder img{aspect-ratio:4/5;object-fit:cover;object-position:72% 50%;border-radius:12px}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:28px}
+.facts div{background:var(--panel-solid);padding:18px 20px}
+.facts dt{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+.facts dd{margin:0;font-weight:500;font-size:15.5px}
+
+/* Research */
+.feature{padding:clamp(24px,3vw,38px)}
+.feature .chip{margin-bottom:16px}
+.feature .chips{margin-top:18px}
+
+/* Publications */
+.pub{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 28px;padding:clamp(22px,3vw,34px)}
+.pub .year{font-family:var(--display);font-weight:700;font-size:clamp(30px,3vw,40px);line-height:1;color:var(--copper);letter-spacing:-.02em}
+.pub .kind{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:0 0 10px}
+.pub .title{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(22px,2.2vw,28px);line-height:1.2;margin:0 0 12px;max-width:34ch}
+.pub .authors{color:var(--muted);font-size:15.5px;margin:0 0 4px}
+.pub .authors strong{color:var(--text);font-weight:600}
+.pub .venue{font-size:15.5px;margin:0 0 16px}
+.pub .foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
+.tracking{border:1px dashed var(--line-2);border-radius:16px;padding:22px 24px;font-family:var(--mono);font-size:13.5px;line-height:1.7;color:var(--muted)}
+.tracking b{color:var(--silver);font-weight:500}
+.profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.profile{display:flex;flex-direction:column;gap:4px;padding:20px 22px;text-decoration:none;color:var(--text)}
+.profile small{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.profile span{font-weight:600;font-size:17px;display:flex;align-items:center;justify-content:space-between}
+.profile em{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--faint)}
+a.profile:hover{color:var(--text);border-color:var(--copper)}
+a.profile:hover .arr{transform:translate(3px,-3px)}
+.profile .arr{transition:transform .3s var(--ease);color:var(--copper)}
+
+/* Project index */
+.index-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.rows-index{border-top:1px solid var(--line)}
+details.row{border-bottom:1px solid var(--line)}
+details.row summary{list-style:none;display:grid;grid-template-columns:48px minmax(0,1fr) auto 44px;grid-template-areas:'num t s go' 'num d s go';gap:8px 24px;align-items:center;padding:28px 12px;cursor:pointer;border-radius:12px;transition:background-color .35s}
+details.row summary::-webkit-details-marker{display:none}
+details.row summary:hover{background:rgba(22,28,49,.6)}
+.row .num{grid-area:num;align-self:start;padding-top:8px;font-family:var(--mono);font-size:13px;color:var(--faint);transition:color .3s}
+.row .t{grid-area:t}.row .s{grid-area:s}.row .go{grid-area:go}
+.row .t{transition:transform .45s var(--ease)}
+.row .t h3{margin:0 0 4px}
+.row .t .meta{margin:0}
+.row .d{grid-area:d;color:var(--muted);font-size:15.5px;margin:0;max-width:56ch;transition:transform .45s var(--ease) .03s}
+details.row summary:hover .d{transform:translateX(8px)}
+.row .s{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.row .go{width:44px;height:44px;border-radius:50%;border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:transform .45s var(--ease),background-color .3s,border-color .3s,color .3s}
+details.row summary:hover .t{transform:translateX(8px)}
+details.row summary:hover .num{color:var(--copper)}
+details.row summary:hover .go{background:var(--copper);border-color:var(--copper);color:var(--ink);transform:rotate(-45deg)}
+details.row[open] .go{transform:rotate(90deg);background:var(--text);border-color:var(--text);color:var(--ink)}
+.row .more{display:grid;grid-template-columns:48px minmax(0,1fr);gap:24px;padding:0 12px 30px}
+.row .more > div{max-width:72ch}
+
+/* Leadership */
+.org{padding:clamp(22px,3vw,32px)}
+.org h3{margin-bottom:14px}
+.roles{list-style:none;margin:0 0 18px;padding:0;display:flex;flex-direction:column;gap:8px;position:relative}
+.roles li{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:12px;align-items:baseline}
+.roles li::before{content:"";width:8px;height:8px;border-radius:50%;border:1.5px solid var(--faint);transform:translateY(-1px)}
+.roles li.now::before{background:var(--copper);border-color:var(--copper);box-shadow:0 0 0 4px rgba(232,149,90,.14)}
+.roles .role{font-weight:600}
+.roles li:not(.now) .role{font-weight:400;color:var(--muted)}
+.roles time{font-family:var(--mono);font-size:12px;color:var(--faint);white-space:nowrap}
+.org-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+
+/* Honours */
+.award-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.award{padding:22px;display:flex;flex-direction:column;gap:8px}
+.award .ico{width:40px;height:40px;border-radius:10px;border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;color:var(--copper);margin-bottom:8px;transition:background-color .3s,border-color .3s}
+.award:hover .ico{background:rgba(232,149,90,.1);border-color:rgba(232,149,90,.4)}
+.award .ico svg{width:20px;height:20px}
+.award small{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.award strong{font-weight:600;font-size:16.5px;line-height:1.35}
+.award span{color:var(--muted);font-size:14.5px;line-height:1.5}
+
+/* Education timeline */
+.timeline{list-style:none;margin:0;padding:0 0 0 28px;position:relative}
+.timeline::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:1px;background:linear-gradient(var(--copper),var(--line) 40%)}
+.timeline li{position:relative;padding:0 0 34px}
+.timeline li:last-child{padding-bottom:0}
+.timeline li::before{content:"";position:absolute;left:-28px;top:7px;width:11px;height:11px;border-radius:50%;background:var(--ink);border:1.5px solid var(--line-2)}
+.timeline li:first-child::before{border-color:var(--copper);background:var(--copper);box-shadow:0 0 0 5px rgba(232,149,90,.15)}
+.timeline .meta{margin-bottom:6px}
+.timeline h3{font-size:20px}
+.timeline p{color:var(--muted);margin:0}
+.exp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.exp{padding:22px}
+.exp p{color:var(--muted);font-size:15px;margin:0}
+.skills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.skill{padding:20px 22px}
+.skill small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+
+/* Contact */
+.contact{padding:clamp(80px,11vw,140px) 0}
+.contact h2{font-family:var(--display);font-weight:800;font-size:clamp(42px,6.6vw,92px);line-height:.98;letter-spacing:-.03em;margin:0 0 28px;max-width:14ch}
+.mailrow{display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.mail{font-size:clamp(20px,2.6vw,30px);font-weight:500}
+.copy{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+
+/* Footer */
+footer{border-top:1px solid var(--line);background:rgba(9,11,20,.88);overflow:hidden}
+.fgrid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);gap:40px;padding:56px 0 40px}
+.fgrid h4{font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:0 0 16px}
+.fgrid p{color:var(--muted);font-size:15px}
+.fgrid ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.fgrid ul a{text-decoration:none;color:var(--muted);display:inline-flex;align-items:center;gap:10px}
+.fgrid ul a:hover{color:var(--text)}
+.fgrid ul svg{width:15px;height:15px;opacity:.8}
+.fbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding:22px 0;border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--faint)}
+.fbar button{appearance:none;background:none;border:0;color:var(--faint);font:inherit;cursor:pointer;padding:0}
+.fbar button:hover{color:var(--copper)}
+.giant{font-family:var(--display);font-weight:800;font-size:clamp(80px,21vw,320px);line-height:.9;letter-spacing:-.04em;text-align:center;color:transparent;-webkit-text-stroke:1px var(--line-2);margin:10px 0 0;padding-bottom:.02em;user-select:none;background:linear-gradient(90deg,var(--silver),var(--copper));-webkit-background-clip:text;background-clip:text;background-size:0% 100%;background-repeat:no-repeat;transition:background-size 1.4s var(--ease)}
+.giant.in{background-size:100% 100%;color:transparent;-webkit-text-fill-color:rgba(11,14,24,.7)}
+
+@media (max-width: 960px){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .block > .wrap{grid-template-columns:minmax(0,1fr)}
+  .head{position:static}
+  .about{grid-template-columns:minmax(0,1fr)}
+  .about .finder{max-width:380px}
+  details.row summary{grid-template-columns:36px minmax(0,1fr) 44px;grid-template-areas:'num t go' 'num d go';gap:6px 14px}
+  .row .s{display:none}
+  .row .more{grid-template-columns:minmax(0,1fr)}
+  .fgrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .fgrid > div:first-child{grid-column:1/-1}
+}
+@media (max-width: 640px){
+  .top .wrap{height:auto;flex-direction:column;align-items:flex-start;gap:2px;padding-top:12px;padding-bottom:2px}
+  .nav{width:100%;gap:20px}
+  .brand small{display:none}
+  .award-grid,.profile-grid,.exp-grid,.skills,.facts{grid-template-columns:minmax(0,1fr)}
+  .pub{grid-template-columns:minmax(0,1fr)}
+  .switch button{font-size:13px;padding:10px 11px}
+  .readout{display:none}
+  .roles li{grid-template-columns:14px minmax(0,1fr)}
+  .roles time{grid-column:2}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js [data-reveal]{opacity:1;transform:none}
+  .w > span,.js .hero h1 .line > span{transform:none}
+  .glow{display:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<canvas id="field" aria-hidden="true"></canvas>
+<div class="glow" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="dot"></span><b>Usman Gani Pranto</b><small>/ ME, BUET</small></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#publications">Publications</a>
+      <a href="#projects">Projects</a>
+      <a href="#leadership">Leadership</a>
+      <a href="#honours">Honours</a>
+      <a href="#education">Education</a>
+      <a class="cta" href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<div class="wrap" id="top">
+  <div class="hero">
+    <div>
+      <p class="pill" data-reveal><span class="pulse"></span>Open to graduate research positions</p>
+      <p class="hello" data-reveal>Hello, I'm Pranto</p>
+      <h1><span class="line"><span>Usman Gani</span></span><span class="line"><span>Pranto</span></span></h1>
+      <p class="lede" data-reveal>I study how solder joints in electronic packages deform and degrade, one atom at a time.</p>
+      <p class="sublede" data-reveal>Final-year mechanical engineering student at Bangladesh University of Engineering and Technology (BUET), Dhaka. I work in molecular dynamics and thermal energy storage, and I hold leadership roles in four student societies.</p>
+      <div class="actions" data-reveal>
+        <a class="btn primary" href="#research">See my research <span class="arr" aria-hidden="true">&rarr;</span></a>
+        <a class="btn" href="mailto:praanto17@gmail.com">Email me</a>
+      </div>
+      <div class="profiles" data-reveal>
+        <a href="https://www.linkedin.com/in/praaaanto/" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/praaaanto" rel="noopener">GitHub</a>
+        <a href="https://orcid.org/0009-0005-6870-2118" rel="noopener">ORCID</a>
+      </div>
+    </div>
+
+    <div data-reveal>
+      <div class="finder">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <span class="label l">Specimen</span><span class="label r">SAC305, schematic</span>
+        <div class="viewport">
+          <canvas id="atoms" role="img" aria-label="Animated sketch of a solder simulation cell. Silver and copper atoms move from random positions into discrete clusters."></canvas>
+          <div class="switch" role="group" aria-label="Microstructure model">
+            <button type="button" id="btn-random" aria-pressed="false">Random substitution</button>
+            <button type="button" id="btn-cluster" aria-pressed="true">Discrete precipitates</button>
+          </div>
+          <div class="legend" aria-hidden="true">
+            <span><i style="background:var(--silver)"></i>Silver</span>
+            <span><i style="background:var(--copper)"></i>Copper</span>
+            <span><i style="background:var(--tin)"></i>Tin</span>
+          </div>
+          <div class="readout" id="readout" aria-live="polite">Model: precipitates</div>
+        </div>
+      </div>
+      <p class="caption">The idea behind my thesis, sketched: real SAC305 solder holds silver and copper in discrete intermetallic particles, so I build them that way instead of scattering atoms at random. Illustration only, not simulation output.</p>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><i></i>Scroll</div>
+</div>
+
+<section class="block" id="about">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow"><span class="rule"></span>About<span class="count">01 of 07</span></p>
+      <h2 data-split>A modeller who learned by building.</h2>
+    </div>
+    <div class="body">
+      <div class="about">
+        <div data-reveal>
+          <p>I am a Level 4 undergraduate in the Department of Mechanical Engineering at BUET, graduating in 2027. My thesis, supervised by Dr. Mohammad Abdul Motalab, uses atomistic simulation to understand the reliability of solder joints in electronic packaging.</p>
+          <p>Before simulation, I learned engineering by building: a honeycomb thermal storage unit that grew from a course project into a conference paper, rover subsystems for BUET's Mars rover team, and two robots. I like problems where careful modelling and physical hardware meet.</p>
+          <p>Outside the lab, I lead the ASHRAE BUET Student Branch and the IMechE BUET Student Chapter, serve as Secretary of the BUET Automobile Club, and I am looking for graduate research opportunities in computational mechanics and thermal sciences.</p>
+          <dl class="facts">
+            <div><dt>Based in</dt><dd>Dhaka, Bangladesh</dd></div>
+            <div><dt>Studying</dt><dd>B.Sc. ME, BUET</dd></div>
+            <div><dt>Focus</dt><dd>Atomistic simulation</dd></div>
+          </dl>
+        </div>
+        <div class="finder" data-reveal>
+          <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <span class="label l">Subject</span><span class="label r">U. G. Pranto</span>
+          <img src="assets/portrait.jpg" alt="Usman Gani Pranto smiling in front of a wall of mechanical engineering textbooks" width="1036" height="1176" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="research">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow"><span class="rule"></span>Research<span class="count">02 of 07</span></p>
+      <h2 data-split>Two problems, two scales.</h2>
+      <p data-reveal>Molecular dynamics of solder reliability, and latent heat thermal energy storage.</p>
+    </div>
+    <div class="body">
+      <article class="card feature" data-reveal>
+        <span class="chip dot live">Undergraduate thesis, in progress</span>
+        <h3>Atomistic molecular dynamics of thermomechanical reliability in copper, SAC305 and copper solder joint stacks</h3>
+        <p class="meta">Jul 2026 to present. Supervisor: Dr. Mohammad Abdul Motalab, Dept. of ME, BUET</p>
+        <p>Solder joints are a frequent point of failure in electronic packages. I model the SAC305 tin, silver and copper solder alloy with its Ag<sub>3</sub>Sn and Cu<sub>6</sub>Sn<sub>5</sub> intermetallic precipitates built as discrete particles, instead of the randomly substituted atoms used in earlier models, and study how that microstructure changes the solder's response to monotonic and cyclic shear.</p>
+        <p>The next stage extends the model to a full layered stack of copper, intermetallic compounds and solder, to examine how damage develops at the interfaces.</p>
+        <ul class="chips" aria-label="Methods"><li class="chip">LAMMPS</li><li class="chip">2NN-MEAM</li><li class="chip">OVITO</li><li class="chip">MPI</li><li class="chip">Python</li></ul>
+      </article>
+
+      <figure data-reveal>
+        <img src="assets/predefence.jpg" alt="Pranto presenting a slide comparing discrete precipitates with random substitution at his thesis pre-defence" width="1288" height="952" loading="lazy">
+        <figcaption>Thesis pre-defence, BUET, 30 September 2026</figcaption>
+      </figure>
+
+      <article class="card feature" data-reveal>
+        <span class="chip dot live">Ongoing</span>
+        <h3>Honeycomb latent heat thermal energy storage</h3>
+        <p class="meta">Oct 2025 to present. Dept. of ME, BUET</p>
+        <p>A thermal storage unit for solar-assisted domestic hot water, using paraffin phase change material sealed in honeycomb cells. It began as our ME 310 design project. I designed the unit, led the fabrication of the prototype, used transient computational fluid dynamics in ANSYS Fluent to follow the melting and solidification fronts, and wrote the conference paper. Our team also co-authored and submitted a proposal to the ASHRAE Undergraduate Program Equipment Grant for a teaching version of the unit.</p>
+        <ul class="chips" aria-label="Methods"><li class="chip">ANSYS Fluent</li><li class="chip">SolidWorks</li><li class="chip">Fabrication</li></ul>
+      </article>
+
+      <div data-reveal>
+        <p class="subhead">Talks</p>
+        <div class="exp-grid">
+          <div class="card exp"><p class="meta">Sep 2026</p><h3 style="font-size:18px">Thesis pre-defence</h3><p>Department of Mechanical Engineering, BUET</p></div>
+          <div class="card exp"><p class="meta">Aug 2026</p><h3 style="font-size:18px">Guidance for ASHRAE scholarship applicants</h3><p>Co-presented at ASHRAE Beyond Membership, ASHRAE Bangladesh Chapter, online</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="publications">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow"><span class="rule"></span>Publications<span class="count">03 of 07</span></p>
+      <h2 data-split>Work heading into print.</h2>
+      <p data-reveal>Conference papers, each marked with its current status.</p>
+    </div>
+    <div class="body">
+      <article class="card pub" data-reveal>
+        <div class="year">2026</div>
+        <div>
+          <p class="kind">Conference paper, molecular dynamics, thesis</p>
+          <p class="title">Monotonic and Cyclic Shear of SAC305 Solder with Discrete Intermetallic Precipitates: A Molecular Dynamics Study</p>
+          <p class="authors"><strong>Pranto, U. G.</strong> and Motalab, M. A.</p>
+          <p class="venue">BSME International Conference on Thermo-Fluid Engineering (ICTE) 2026, BUET, Dhaka</p>
+          <div class="foot">
+            <span class="chip dot live">Abstract accepted, full paper in preparation</span>
+            <a class="btn sm" href="#research">Thesis overview <span class="arr" aria-hidden="true">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card pub" data-reveal>
+        <div class="year">2027</div>
+        <div>
+          <p class="kind">Conference paper, thermal energy storage, ME 310</p>
+          <p class="title">Design and Development of a Honeycomb-Based Latent Heat Thermal Energy Storage (LHTES) Unit Using Paraffin PCM for Solar-Assisted Domestic Hot Water Systems</p>
+          <p class="authors">Sohan, S. M. S. A., <strong>Pranto, U. G.*</strong>, Faisal, M. F., Kafi, M. S. H. and Ar-Rafi, K. M. &nbsp;*Corresponding author</p>
+          <p class="venue">ASHRAE 2027 Winter Conference, Chicago, Illinois</p>
+          <div class="foot">
+            <span class="chip dot review">Manuscript under review</span>
+            <a class="btn sm" href="#projects">Project details <span class="arr" aria-hidden="true">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <div class="tracking" data-reveal><b>// More in progress.</b> New papers will appear here, with links, as they are accepted and published.</div>
+
+      <div data-reveal>
+        <p class="subhead">Follow the work</p>
+        <div class="profile-grid">
+          <a class="card profile" href="https://orcid.org/0009-0005-6870-2118" rel="noopener"><small>Identifier</small><span>ORCID <b class="arr" aria-hidden="true">&#8599;</b></span><em>0009-0005-6870-2118</em></a>
+          <div class="card profile"><small>Profile</small><span>Google Scholar</span><em>Opens once my first paper is indexed</em></div>
+          <a class="card profile" href="https://www.linkedin.com/in/praaaanto/" rel="noopener"><small>Network</small><span>LinkedIn <b class="arr" aria-hidden="true">&#8599;</b></span><em>in/praaaanto</em></a>
+          <a class="card profile" href="https://github.com/praaaanto" rel="noopener"><small>Code</small><span>GitHub <b class="arr" aria-hidden="true">&#8599;</b></span><em>praaaanto</em></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="projects">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow"><span class="rule"></span>Projects<span class="count">04 of 07</span></p>
+      <h2 data-split>Built, tested, documented.</h2>
+      <p data-reveal>Hardware I have designed and built. Open any entry for the details.</p>
+    </div>
+    <div class="body">
+      <div class="index-bar" data-reveal><span>Index, 4 entries</span><span class="chip dot done">4 completed</span></div>
+      <div class="rows-index" data-reveal>
+        <details class="row">
+          <summary>
+            <span class="num">/ 01</span>
+            <div class="t"><h3>Honeycomb thermal storage prototype</h3><p class="meta">2025 to 2026, ME 310</p></div>
+            <p class="d">A honeycomb-encapsulated paraffin storage unit for solar-assisted hot water.</p>
+            <div class="s"><span class="chip dot done">Completed</span></div>
+            <span class="go" aria-hidden="true">&rarr;</span>
+          </summary>
+          <div class="more"><span></span><div>
+            <p>Designed the storage unit and led its fabrication with a five-member team. The prototype passed hydrostatic pressure testing, and the design became our ASHRAE conference paper.</p>
+            <ul class="chips"><li class="chip">SolidWorks</li><li class="chip">ANSYS Fluent</li><li class="chip">Fabrication</li></ul>
+          </div></div>
+        </details>
+        <details class="row">
+          <summary>
+            <span class="num">/ 02</span>
+            <div class="t"><h3>Mars rover subsystems</h3><p class="meta">2025 to 2026, Team Interplanetar</p></div>
+            <p class="d">Wheels, steering and a gripper for BUET's Mars rover.</p>
+            <div class="s"><span class="chip dot done">Completed</span></div>
+            <span class="go" aria-hidden="true">&rarr;</span>
+          </summary>
+          <div class="more"><span></span><div>
+            <p>As part of the mechanical and manufacturing subteam, worked on custom wheel design, an Ackermann steering system and the assembly of a robotic gripper, with technical documentation for each.</p>
+            <ul class="chips"><li class="chip">SolidWorks</li><li class="chip">Mechanism design</li></ul>
+          </div></div>
+        </details>
+        <details class="row">
+          <summary>
+            <span class="num">/ 03</span>
+            <div class="t"><h3>Oogway, a bio-mimetic sea turtle robot</h3><p class="meta">2025</p></div>
+            <p class="d">An underwater robot that swims with flapping fins.</p>
+            <div class="s"><span class="chip dot done">Completed</span></div>
+            <span class="go" aria-hidden="true">&rarr;</span>
+          </summary>
+          <div class="more"><span></span><div>
+            <p>The robot controls its buoyancy to move in three dimensions. Engineered the shell, flippers and sealed motor pods, and verified waterproofing in reservoir tests.</p>
+            <ul class="chips"><li class="chip">SolidWorks</li><li class="chip">Arduino</li><li class="chip">Sensors</li></ul>
+          </div></div>
+        </details>
+        <details class="row">
+          <summary>
+            <span class="num">/ 04</span>
+            <div class="t"><h3>SoccerBOT</h3><p class="meta">2024, Intra BUET Robo Challenge</p></div>
+            <p class="d">A remote-controlled soccer robot on mecanum wheels. Placed 4th.</p>
+            <div class="s"><span class="chip dot done">Completed</span></div>
+            <span class="go" aria-hidden="true">&rarr;</span>
+          </summary>
+          <div class="more"><span></span><div>
+            <p>Led the chassis design and mechanical assembly and integrated the electronics. The team placed 4th in the Intra BUET Robo Challenge 2024.</p>
+            <ul class="chips"><li class="chip">SolidWorks</li><li class="chip">AutoCAD</li><li class="chip">PCB</li></ul>
+          </div></div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="leadership">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow"><span class="rule"></span>Leadership<span class="count">05 of 07</span></p>
+      <h2 data-split>From logistics to leading.</h2>
+      <p data-reveal>Student societies at BUET.</p>
+    </div>
+    <div class="body">
+      <div class="org-grid">
+        <article class="card org" data-reveal>
+          <h3>ASHRAE BUET Student Branch</h3>
+          <ul class="roles">
+            <li class="now"><span class="role">President</span><time>Jul 2026 to present</time></li>
+            <li><span class="role">Manager</span><time>May 2025 to Jul 2026</time></li>
+            <li><span class="role">Founding member</span><time>Oct 2024</time></li>
+          </ul>
+          <ul class="points">
+            <li>Formed and onboarded the branch's 3rd Executive Committee for the 2026 to 2027 term.</li>
+            <li>Hosted Mr. Abdallah Mahmoud, ASHRAE Regional Vice-Chair for Government Affairs, Region-at-Large, for a branch visit with senior Bangladesh Chapter leaders in September 2026.</li>
+            <li>As Manager, exhibited three of our mechanical prototypes, including heat exchangers and a cooling tower, at SAFECON 2025 and ICME 2025, and represented the branch at the 10th Safe HVACR and Cold Chain Expo.</li>
+            <li>Organised technical tours to industry for branch members.</li>
+          </ul>
+        </article>
+
+        <article class="card org" data-reveal>
+          <h3>IMechE BUET Student Chapter</h3>
+          <ul class="roles">
+            <li class="now"><span class="role">Chair</span><time>Jul 2026 to present</time></li>
+            <li><span class="role">Treasurer</span><time>Apr 2025 to Jul 2026</time></li>
+            <li><span class="role">Member</span><time>2024</time></li>
+          </ul>
+          <ul class="points">
+            <li>Led Speak Out for Engineering: Intra BUET Heats 2026 as Chair, from the call for abstracts to the final in September 2026.</li>
+            <li>Organised the joint IMechE and ASHRAE stall at BUET Club Fest 2026.</li>
+            <li>As Treasurer, managed the chapter budget, ran a member recruitment drive, and handled logistics for two drone workshops and masterclasses with Distinguished Professor Saidur Rahman and Erasmus Mundus representatives.</li>
+          </ul>
+        </article>
+
+        <article class="card org" data-reveal>
+          <h3>BUET Automobile Club</h3>
+          <ul class="roles">
+            <li class="now"><span class="role">Secretary</span><time>Jul 2026 to present</time></li>
+            <li><span class="role">Additional Chief Executive, Logistics</span><time>2024 to 2026</time></li>
+          </ul>
+          <ul class="points">
+            <li>Take part in the club's governance and planning meetings, and helped organise events including the freshers' reception and the farewell programme.</li>
+            <li>Coordinated logistics and venues for automotive showcases and robotics exhibitions.</li>
+          </ul>
+        </article>
+
+        <article class="card org" data-reveal>
+          <h3>Multiscale Mechanical Modeling and Research Network (MMMRN)</h3>
+          <ul class="roles">
+            <li class="now"><span class="role">Vice President, Offline Affairs</span><time>Jul 2026 to present</time></li>
+          </ul>
+          <ul class="points">
+            <li>Working with fellow members to establish this research network as an officially recognised BUET club.</li>
+            <li>Coordinated a joint session on molecular dynamics with LAMMPS together with the AUST Applied Simulation and Modeling Lab.</li>
+          </ul>
+        </article>
+
+        <article class="card org" data-reveal>
+          <h3>Badhan Foundation</h3>
+          <ul class="roles">
+            <li class="now"><span class="role">Volunteer</span><time>2022 to present</time></li>
+          </ul>
+          <ul class="points">
+            <li>Help run blood donation drives and find donors for medical emergencies.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="honours">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow"><span class="rule"></span>Honours<span class="count">06 of 07</span></p>
+      <h2 data-split>Recognition and credentials.</h2>
+      <p data-reveal>Awards, scholarships and certifications.</p>
+    </div>
+    <div class="body">
+      <div class="award-grid" data-reveal>
+        <div class="card award"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/></svg></span><small>2026 to 2027, ASHRAE Foundation</small><strong>ASHRAE Scholarship Trustees General Scholarship</strong><span>Among the first recipients from Bangladesh in ASHRAE Region-at-Large.</span></div>
+        <div class="card award"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 01-8 0z"/><path d="M8 6H5v1a3 3 0 003 3M16 6h3v1a3 3 0 01-3 3M12 13v4M8 20h8"/></svg></span><small>2024, BUET</small><strong>4th place, Intra BUET Robo Challenge</strong><span>With SoccerBOT.</span></div>
+        <div class="card award"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 13.5L8 21l4-2 4 2-1-7.5"/></svg></span><small>2024, Team Interplanetar</small><strong>Certificate of Excellence, Interplanetar Mechanical Course</strong><span>Week-long programme on mechanical design and rover mechanics.</span></div>
+        <div class="card award"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h6a2 2 0 012 2v12a2 2 0 00-2-2H4zM20 5h-6a2 2 0 00-2 2v12a2 2 0 012-2h6z"/></svg></span><small>2021 to 2023, BUET</small><strong>BUET Technical Scholarship</strong><span>Merit scholarship for the 2021 to 2022 and 2022 to 2023 sessions.</span></div>
+        <div class="card award"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.5 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg></span><small>School years, Government of Bangladesh</small><strong>Government Talentpool Scholarship</strong><span>At the Primary, Junior and Secondary School Certificate examinations.</span></div>
+      </div>
+
+      <div data-reveal>
+        <p class="subhead">Certifications, Dassault Syst&egrave;mes</p>
+        <div class="award-grid">
+          <div class="card award"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><small>Jan 2026</small><strong>Certified SOLIDWORKS Professional (CSWP)</strong></div>
+          <div class="card award"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><small>Sep 2025</small><strong>SOLIDWORKS Associate in Simulation, Additive Manufacturing and Sustainability</strong></div>
+          <div class="card award"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><small>Nov 2024</small><strong>Certified SOLIDWORKS Associate (CSWA)</strong></div>
+        </div>
+      </div>
+
+      <div data-reveal>
+        <p class="subhead">Workshops</p>
+        <p style="color:var(--muted)">Shape-shift drones and drone technology (IMechE BUET, 2025), rover mechanics (Team Interplanetar, 2024), ANSYS for finite element and fluid analysis (BUET Automobile Club, 2023), mechanical research methods (MMMRN, 2023), and robotics (BUET Robotics Society, 2023).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="education">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow"><span class="rule"></span>Education<span class="count">07 of 07</span></p>
+      <h2 data-split>Where I'm learning.</h2>
+      <p data-reveal>Schooling, experience and the toolkit.</p>
+    </div>
+    <div class="body">
+      <ul class="timeline" data-reveal>
+        <li><p class="meta">2022 to 2027</p><h3>B.Sc. in Mechanical Engineering</h3><p>Bangladesh University of Engineering and Technology, Dhaka. CGPA 3.57 out of 4.00 after six terms.</p></li>
+        <li><p class="meta">2019 to 2021</p><h3>Higher Secondary Certificate, Science</h3><p>Notre Dame College, Dhaka. GPA 5.00 out of 5.00, ranked 25th of more than 2,000 students.</p></li>
+        <li><p class="meta">2019</p><h3>Secondary School Certificate, Science</h3><p>Mymensingh Zilla School. GPA 5.00 out of 5.00.</p></li>
+      </ul>
+
+      <figure data-reveal>
+        <img src="assets/department.jpg" alt="Pranto standing beside the Department of Mechanical Engineering sign at BUET" width="1288" height="952" loading="lazy">
+        <figcaption>Department of Mechanical Engineering, BUET</figcaption>
+      </figure>
+
+      <div data-reveal>
+        <p class="subhead">Experience</p>
+        <div class="exp-grid">
+          <div class="card exp"><p class="meta">Jun 2026</p><h3 style="font-size:18px">Industrial attachment trainee, Meghna Sugar Refineries Ltd.</h3><p>Studied the refining line from decolourisation through evaporation and crystallisation, reviewed maintenance of centrifuges, dryers and the co-generation plant, and wrote technical reports on process control and utilities.</p></div>
+          <div class="card exp"><p class="meta">2022 to present</p><h3 style="font-size:18px">Independent academic tutor</h3><p>Mentored more than 60 students in science and mathematics, and prepared students for engineering and medical university admission tests.</p></div>
+        </div>
+      </div>
+
+      <div data-reveal>
+        <p class="subhead">Toolkit</p>
+        <div class="skills">
+          <div class="card skill"><small>Simulation and analysis</small><ul class="chips"><li class="chip">LAMMPS</li><li class="chip">OVITO</li><li class="chip">ANSYS Fluent</li><li class="chip">ANSYS Mechanical</li></ul></div>
+          <div class="card skill"><small>Computing</small><ul class="chips"><li class="chip">MPI</li><li class="chip">Linux</li><li class="chip">WSL2</li><li class="chip">Remote clusters</li></ul></div>
+          <div class="card skill"><small>Programming</small><ul class="chips"><li class="chip">Python</li><li class="chip">NumPy</li><li class="chip">pandas</li><li class="chip">Matplotlib</li><li class="chip">C</li><li class="chip">C++</li><li class="chip">MATLAB</li></ul></div>
+          <div class="card skill"><small>Design and tools</small><ul class="chips"><li class="chip">SolidWorks</li><li class="chip">AutoCAD</li><li class="chip">Arduino</li><li class="chip">Git</li><li class="chip">LaTeX</li></ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <p class="eyebrow"><span class="rule"></span>Contact</p>
+    <h2 data-split>Let's talk research.</h2>
+    <div class="mailrow" data-reveal>
+      <a class="mail" href="mailto:praanto17@gmail.com">praanto17@gmail.com</a>
+      <button class="btn sm copy" type="button" id="copy" data-email="praanto17@gmail.com">Copy</button>
+    </div>
+    <div class="profiles" data-reveal style="margin-top:28px;font-size:17px;gap:28px">
+      <a href="https://www.linkedin.com/in/praaaanto/" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/praaaanto" rel="noopener">GitHub</a>
+      <a href="https://orcid.org/0009-0005-6870-2118" rel="noopener">ORCID</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <h4>Usman Gani Pranto</h4>
+        <p>Final-year mechanical engineering student at BUET, working on atomistic simulation of solder reliability and thermal energy storage.</p>
+        <ul class="chips" style="flex-direction:row;gap:8px"><li class="chip dot done">Open to opportunities</li><li class="chip">ME, BUET</li></ul>
+      </div>
+      <div>
+        <h4>Site</h4>
+        <ul>
+          <li><a href="#about">About</a></li><li><a href="#research">Research</a></li><li><a href="#publications">Publications</a></li><li><a href="#projects">Projects</a></li><li><a href="#leadership">Leadership</a></li><li><a href="#honours">Honours</a></li><li><a href="#education">Education</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Elsewhere</h4>
+        <ul>
+          <li><a href="mailto:praanto17@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Email</a></li>
+          <li><a href="https://www.linkedin.com/in/praaaanto/" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 014 0v4M12 10v7"/></svg>LinkedIn</a></li>
+          <li><a href="https://github.com/praaaanto" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 19c-4 1.5-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 00-1.3-3.2 4.2 4.2 0 00-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 00-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 00-.1 3.2A4.6 4.6 0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>GitHub</a></li>
+          <li><a href="https://orcid.org/0009-0005-6870-2118" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9 8v.01M9 11v6M12 11v6h2a3 3 0 000-6z"/></svg>ORCID</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbar">
+      <span>&copy; 2026 Usman Gani Pranto. Last updated October 2026.</span>
+      <button type="button" id="totop">Back to top &uarr;</button>
+    </div>
+  </div>
+  <div class="giant" aria-hidden="true">PRANTO</div>
+</footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var finePointer = window.matchMedia('(pointer: fine)').matches;
+
+  /* 1. Split headings into words for the rising reveal */
+  document.querySelectorAll('[data-split]').forEach(function (el) {
+    var words = el.textContent.trim().split(/\s+/);
+    el.setAttribute('aria-label', el.textContent.trim());
+    el.innerHTML = words.map(function (w, i) {
+      return '<span class="w" aria-hidden="true"><span style="transition-delay:' + (i * 70) + 'ms">' + w + '</span></span>';
+    }).join(' ');
+  });
+
+  /* 2. Reveal on scroll, with a gentle stagger for siblings */
+  var revealables = document.querySelectorAll('[data-reveal],[data-split],.giant');
+  if (reduce || !('IntersectionObserver' in window)) {
+    revealables.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        var sibs = el.parentElement ? Array.prototype.filter.call(el.parentElement.children, function (c) { return c.hasAttribute('data-reveal'); }) : [];
+        var idx = Math.max(0, sibs.indexOf(el));
+        if (el.hasAttribute('data-reveal')) el.style.transitionDelay = Math.min(idx, 4) * 80 + 'ms';
+        el.classList.add('in');
+        io.unobserve(el);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    revealables.forEach(function (el) { io.observe(el); });
+  }
+
+  /* 3. Scroll spy for the navigation underline */
+  var links = {};
+  document.querySelectorAll('.nav a[href^="#"]').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+  if ('IntersectionObserver' in window) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && links[e.target.id]) {
+          Object.keys(links).forEach(function (k) { links[k].classList.remove('active'); });
+          links[e.target.id].classList.add('active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    document.querySelectorAll('main section[id]').forEach(function (s) { spy.observe(s); });
+  }
+
+  /* 4. Scroll progress bar */
+  var bar = document.querySelector('.progress');
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function () {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.transform = 'scaleX(' + (h > 0 ? window.scrollY / h : 0) + ')';
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* 5. Pointer state shared by cursor, glow and lattice field */
+  var pointer = { x: window.innerWidth * 0.7, y: window.innerHeight * 0.35, active: false };
+  var ring = document.querySelector('.cursor-ring');
+  var dot = document.querySelector('.cursor-dot');
+  var glow = document.querySelector('.glow');
+  var rx = pointer.x, ry = pointer.y, gx = pointer.x, gy = pointer.y;
+
+  window.addEventListener('pointermove', function (e) {
+    if (e.pointerType !== 'mouse') return;
+    pointer.x = e.clientX; pointer.y = e.clientY; pointer.active = true;
+    if (finePointer && !reduce) document.body.classList.add('has-cursor');
+  }, { passive: true });
+  document.addEventListener('mouseleave', function () { pointer.active = false; document.body.classList.remove('has-cursor'); });
+  window.addEventListener('pointerdown', function () { document.body.classList.add('cursor-down'); });
+  window.addEventListener('pointerup', function () { document.body.classList.remove('cursor-down'); });
+  document.addEventListener('mouseover', function (e) {
+    var hit = e.target.closest && e.target.closest('a,button,summary');
+    document.body.classList.toggle('cursor-hover', !!hit);
+  });
+
+  function cursorLoop() {
+    rx += (pointer.x - rx) * 0.18; ry += (pointer.y - ry) * 0.18;
+    gx += (pointer.x - gx) * 0.06; gy += (pointer.y - gy) * 0.06;
+    dot.style.transform = 'translate(' + pointer.x + 'px,' + pointer.y + 'px)';
+    ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
+    glow.style.transform = 'translate(' + gx + 'px,' + gy + 'px)';
+    requestAnimationFrame(cursorLoop);
+  }
+  if (!reduce) requestAnimationFrame(cursorLoop);
+
+  /* 6. Background lattice: atoms with thermal jitter, displaced around the pointer like the strain field of a precipitate */
+  var field = document.getElementById('field');
+  var fctx = field.getContext('2d');
+  var pts = [], fw = 0, fh = 0, fdpr = 1, fRunning = true;
+  function buildField() {
+    fdpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    fw = window.innerWidth; fh = window.innerHeight;
+    field.width = Math.round(fw * fdpr); field.height = Math.round(fh * fdpr);
+    fctx.setTransform(fdpr, 0, 0, fdpr, 0, 0);
+    var s = fw < 640 ? 26 : 30, rowH = s * 0.866;
+    pts = [];
+    for (var j = -1, y = -rowH; y < fh + rowH; j++, y += rowH) {
+      for (var x = (j % 2 ? s / 2 : 0) - s; x < fw + s; x += s) {
+        pts.push({ x: x, y: y, p: Math.random() * 6.28, q: Math.random() * 6.28 });
+      }
+    }
+  }
+  var bins = [[], [], [], []];
+  var binStyle = ['rgba(93,102,132,0.20)', 'rgba(120,128,160,0.34)', 'rgba(179,173,245,0.40)', 'rgba(232,149,90,0.52)'];
+  function drawField(t) {
+    fctx.clearRect(0, 0, fw, fh);
+    var px, py;
+    if (pointer.active) { px = pointer.x; py = pointer.y; }
+    else { px = fw * (0.62 + 0.22 * Math.sin(t * 0.00011)); py = fh * (0.42 + 0.2 * Math.sin(t * 0.00017 + 1)); }
+    var R = 120, R2 = 2 * R * R, amp = 22;
+    bins[0].length = bins[1].length = bins[2].length = bins[3].length = 0;
+    var jit = reduce ? 0 : 0.7, tt = t * 0.0016;
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      var dx = p.x - px, dy = p.y - py, d2 = dx * dx + dy * dy;
+      var f = Math.exp(-d2 / R2);
+      var d = Math.sqrt(d2) || 1;
+      var x = p.x + dx / d * amp * f + jit * Math.sin(tt + p.p);
+      var y = p.y + dy / d * amp * f + jit * Math.cos(tt * 1.1 + p.q);
+      var b = f > 0.55 ? 3 : f > 0.25 ? 2 : f > 0.06 ? 1 : 0;
+      bins[b].push(x, y);
+    }
+    for (var k = 0; k < 4; k++) {
+      var arr = bins[k], sz = k === 3 ? 2.6 : k === 2 ? 2.2 : 1.6;
+      fctx.fillStyle = binStyle[k];
+      fctx.beginPath();
+      for (var m = 0; m < arr.length; m += 2) fctx.rect(arr[m] - sz / 2, arr[m + 1] - sz / 2, sz, sz);
+      fctx.fill();
+    }
+  }
+  function fieldLoop(t) { if (!fRunning) return; drawField(t); requestAnimationFrame(fieldLoop); }
+  buildField();
+  if (reduce) { drawField(0); fRunning = false; }
+  else requestAnimationFrame(fieldLoop);
+  window.addEventListener('resize', function () { buildField(); if (reduce) drawField(0); });
+  document.addEventListener('visibilitychange', function () {
+    if (reduce) return;
+    if (document.hidden) fRunning = false; else if (!fRunning) { fRunning = true; requestAnimationFrame(fieldLoop); }
+  });
+
+  /* 7. Copy email */
+  var copyBtn = document.getElementById('copy');
+  copyBtn.addEventListener('click', function () {
+    var email = copyBtn.getAttribute('data-email');
+    function done() { copyBtn.textContent = 'Copied'; setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1800); }
+    if (navigator.clipboard) navigator.clipboard.writeText(email).then(done, function () {});
+  });
+  document.getElementById('totop').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
+
+  /* 8. Hero specimen: atoms settle from random substitution into discrete precipitates */
+  var canvas = document.getElementById('atoms');
+  var ctx = canvas.getContext('2d');
+  var btnR = document.getElementById('btn-random');
+  var btnC = document.getElementById('btn-cluster');
+  var readout = document.getElementById('readout');
+  var seed = 7;
+  function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+  function inCube() { return [rnd() * 1.7 - 0.85, rnd() * 1.7 - 0.85, rnd() * 1.7 - 0.85]; }
+  function inBall(c, r) {
+    var x, y, z;
+    do { x = rnd() * 2 - 1; y = rnd() * 2 - 1; z = rnd() * 2 - 1; } while (x * x + y * y + z * z > 1);
+    var k = r * Math.cbrt(rnd()), n = Math.sqrt(x * x + y * y + z * z) || 1;
+    return [c[0] + x / n * k, c[1] + y / n * k, c[2] + z / n * k];
+  }
+  var small = window.innerWidth < 640, atoms = [];
+  for (var i = 0, nT = small ? 140 : 230; i < nT; i++) { var p0 = inCube(); atoms.push({ t: 0, a: p0, b: p0 }); }
+  var per = small ? 16 : 22;
+  [[-0.45, -0.35, 0.3], [0.4, -0.5, -0.35], [0.1, 0.45, 0.45]].forEach(function (c) { for (var j = 0; j < per; j++) atoms.push({ t: 1, a: inCube(), b: inBall(c, 0.2) }); });
+  [[-0.5, 0.4, -0.4], [0.5, 0.25, 0.1]].forEach(function (c) { for (var j = 0; j < per; j++) atoms.push({ t: 2, a: inCube(), b: inBall(c, 0.2) }); });
+  var corners = [], edges = [];
+  [-0.95, 0.95].forEach(function (x) { [-0.95, 0.95].forEach(function (y) { [-0.95, 0.95].forEach(function (z) { corners.push([x, y, z]); }); }); });
+  for (var a1 = 0; a1 < 8; a1++) for (var a2 = a1 + 1; a2 < 8; a2++) {
+    var diff = 0; for (var k = 0; k < 3; k++) if (corners[a1][k] !== corners[a2][k]) diff++;
+    if (diff === 1) edges.push([corners[a1], corners[a2]]);
+  }
+  var colors = ['93,102,132', '179,173,245', '232,149,90'], radii = [2.1, 4.6, 4.6];
+  var mix = reduce ? 1 : 0, target = 1, angle = 0.6, w = 0, h = 0, running = true, visible = true, tiltX = 0, tiltY = 0;
+
+  function resize() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2), r = canvas.getBoundingClientRect();
+    w = r.width; h = r.height;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+  function project(p) {
+    var ang = angle + tiltY, ca = Math.cos(ang), sa = Math.sin(ang);
+    var x = p[0] * ca + p[2] * sa, z = -p[0] * sa + p[2] * ca, y = p[1];
+    var tl = 0.38 + tiltX, ct = Math.cos(tl), st = Math.sin(tl);
+    var y2 = y * ct - z * st, z2 = y * st + z * ct;
+    var s = 4.6 / (4.6 + z2), scale = Math.min(w, h) * 0.26;
+    return { x: w / 2 + x * scale * s, y: h / 2 + 18 + y2 * scale * s, z: z2, s: s };
+  }
+  function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(163,169,191,0.28)';
+    edges.forEach(function (e) { var a = project(e[0]), b = project(e[1]); ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); });
+    var kk = ease(mix);
+    var list = atoms.map(function (at) {
+      var q = project([at.a[0] + (at.b[0] - at.a[0]) * kk, at.a[1] + (at.b[1] - at.a[1]) * kk, at.a[2] + (at.b[2] - at.a[2]) * kk]);
+      q.t = at.t; return q;
+    });
+    list.sort(function (a, b) { return b.z - a.z; });
+    list.forEach(function (q) {
+      var depth = Math.max(0.35, Math.min(1, 0.75 - q.z * 0.35));
+      ctx.beginPath(); ctx.arc(q.x, q.y, radii[q.t] * q.s, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(' + colors[q.t] + ',' + (q.t === 0 ? depth * 0.7 : depth) + ')';
+      ctx.fill();
+    });
+  }
+  var last = 0;
+  function frame(ts) {
+    if (!running) return;
+    var dt = last ? Math.min((ts - last) / 1000, 0.05) : 0; last = ts;
+    angle += dt * 0.12;
+    if (pointer.active) {
+      var r = canvas.getBoundingClientRect();
+      var nx = ((pointer.x - r.left) / r.width - 0.5), ny = ((pointer.y - r.top) / r.height - 0.5);
+      nx = Math.max(-1, Math.min(1, nx)); ny = Math.max(-1, Math.min(1, ny));
+      tiltY += (nx * 0.5 - tiltY) * 0.05; tiltX += (ny * 0.25 - tiltX) * 0.05;
+    }
+    if (mix !== target) { var step = dt / 2.2; mix = target > mix ? Math.min(target, mix + step) : Math.max(target, mix - step); }
+    draw();
+    requestAnimationFrame(frame);
+  }
+  function setTarget(t) {
+    target = t;
+    btnR.setAttribute('aria-pressed', t === 0 ? 'true' : 'false');
+    btnC.setAttribute('aria-pressed', t === 1 ? 'true' : 'false');
+    readout.textContent = t === 1 ? 'Model: precipitates' : 'Model: random';
+    if (reduce) { mix = t; draw(); }
+  }
+  btnR.addEventListener('click', function () { setTarget(0); });
+  btnC.addEventListener('click', function () { setTarget(1); });
+  function start() { if (reduce) return; if (!running && visible && !document.hidden) { running = true; last = 0; requestAnimationFrame(frame); } }
+  function stop() { running = false; }
+  document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; visible ? start() : stop(); }).observe(canvas);
+  window.addEventListener('resize', resize);
+  resize();
+  if (reduce) { running = false; draw(); }
+  else { target = 0; requestAnimationFrame(frame); setTimeout(function () { setTarget(1); }, 900); }
+})();
+</script>
+</body>
+</html>

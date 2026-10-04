@@ -177,7 +177,15 @@
     function loop(t) { if (!fRunning) return; draw(t); requestAnimationFrame(loop); }
     setStyles(); build();
     if (reduce) { draw(0); fRunning = false; } else requestAnimationFrame(loop);
-    addEventListener('resize', function () { build(); if (reduce) draw(0); });
+    var lastW = innerWidth, lastH = innerHeight, rt;
+    addEventListener('resize', function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () {
+        /* Phones resize the viewport as the address bar slides; only rebuild on a real change */
+        if (innerWidth === lastW && Math.abs(innerHeight - lastH) < 160) return;
+        lastW = innerWidth; lastH = innerHeight; build(); if (reduce) draw(0);
+      }, 180);
+    });
     document.addEventListener('themechange', function () { setStyles(); if (reduce) draw(0); });
     document.addEventListener('visibilitychange', function () {
       if (reduce) return;
@@ -195,4 +203,37 @@
   });
   var totop = document.getElementById('totop');
   if (totop) totop.addEventListener('click', function () { scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
+
+  /* 9. Mobile menu: a full-screen sheet built from the page's own navigation */
+  var navEl = document.querySelector('.top .nav'), toggleEl = document.querySelector('.top .theme-toggle');
+  if (navEl && toggleEl) {
+    var mb = document.createElement('button');
+    mb.type = 'button'; mb.className = 'menu-btn'; mb.setAttribute('aria-expanded', 'false'); mb.setAttribute('aria-controls', 'menu-sheet');
+    mb.innerHTML = '<i aria-hidden="true"></i>Menu';
+    toggleEl.insertAdjacentElement('afterend', mb);
+    var sheet = document.createElement('div');
+    sheet.className = 'menu-sheet'; sheet.id = 'menu-sheet'; sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true'); sheet.setAttribute('aria-label', 'Site menu');
+    var list = document.createElement('nav'); list.setAttribute('aria-label', 'Menu');
+    Array.prototype.forEach.call(navEl.querySelectorAll('a'), function (a, i) {
+      var l = document.createElement('a'); l.href = a.getAttribute('href');
+      l.innerHTML = '<small>' + String(i + 1).padStart(2, '0') + '</small>' + a.textContent;
+      l.style.transitionDelay = (60 + i * 45) + 'ms';
+      list.appendChild(l);
+    });
+    sheet.appendChild(list);
+    var foot = document.createElement('div'); foot.className = 'sheet-foot';
+    foot.innerHTML = '<a href="mailto:praanto17@gmail.com">Email</a><a href="https://www.linkedin.com/in/praaaanto/" rel="noopener">LinkedIn</a><a href="https://orcid.org/0009-0005-6870-2118" rel="noopener">ORCID</a>';
+    sheet.appendChild(foot);
+    document.body.appendChild(sheet);
+    function setMenu(open) {
+      sheet.classList.toggle('open', open); document.body.classList.toggle('menu-open', open);
+      mb.setAttribute('aria-expanded', open ? 'true' : 'false');
+      mb.lastChild.textContent = open ? 'Close' : 'Menu';
+      if (open) { var cur = list.querySelector('a'); if (cur) cur.focus({ preventScroll: true }); }
+    }
+    mb.addEventListener('click', function () { setMenu(!sheet.classList.contains('open')); });
+    list.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && sheet.classList.contains('open')) { setMenu(false); mb.focus(); } });
+    addEventListener('resize', function () { if (innerWidth > 1100 && sheet.classList.contains('open')) setMenu(false); });
+  }
 })();

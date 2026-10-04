@@ -81,6 +81,15 @@
 .cfd-ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--faint);padding:0 4px 0 62px}
 .cfd-cap{margin-top:12px;margin-bottom:0;min-height:3.2em;color:var(--muted);font-size:15px}
 
+
+@media (max-width: 720px){
+  .evo{grid-template-columns:minmax(0,1fr)}
+  .evo .arrowcol{transform:rotate(90deg);height:40px}
+  .daychart{overflow-x:auto}
+  .daychart svg{min-width:540px}
+  .schem-top{flex-direction:column;align-items:flex-start}
+  .cfd-head{flex-direction:column;align-items:flex-start}
+}
 </style>
 </head>
 <body>
@@ -390,7 +399,7 @@
 <div class="wrap">
   <nav class="pager" aria-label="More work">
     <a class="card" href="../index.html#projects"><small>Back</small><b>All projects</b></a>
-    <a class="card" href="../index.html#research"><small>Next up</small><b>Thesis research</b></a>
+    <a class="card" href="../research/thesis.html"><small>Next up</small><b>Thesis research</b></a>
   </nav>
 </div>
 

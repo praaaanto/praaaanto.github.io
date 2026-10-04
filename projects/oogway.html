@@ -127,6 +127,13 @@
   .specs,.iters,.leaks,.links{grid-template-columns:minmax(0,1fr)}
   .specs{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+.swipe{display:none}
+@media (max-width:640px){
+  .swipe{display:inline}
+  .ruler text,.syr text{font-size:16px}
+  .divesim .seg button{padding:10px 11px;font-size:13px}
+  .anat-img .pin{width:32px;height:32px;font-size:13px}
+}
 </style>
 
 </head>
@@ -258,7 +265,7 @@
       </div>
 
       <div class="card flow" data-reveal>
-        <p class="meta" style="margin:0 0 10px">How a command travels</p>
+        <p class="meta" style="margin:0 0 10px">How a command travels<span class="swipe"> &middot; swipe to see all</span></p>
         <div class="flow-scroll">
           <svg viewBox="0 0 920 250" role="img" aria-label="System diagram. Upper path: laptop GUI, tether, Arduino Uno, motor driver, linear actuator, syringe, which makes the robot dive or surface. Lower path: battery, buck converter, six servos, fins, which make it swim and turn. The Arduino also commands the servos.">
             <defs><marker id="fa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--faint)"/></marker></defs>
@@ -311,10 +318,10 @@
             <ellipse cx="236" cy="86" rx="16" ry="5" class="fin"/><ellipse cx="344" cy="86" rx="16" ry="5" class="fin"/>
           </g>
           <g class="syr">
-            <text x="20" y="40">Syringe</text>
+            <text x="10" y="40">Syringe</text>
             <rect x="24" y="52" width="22" height="200" rx="6" class="barrel"/>
             <rect id="syr-fill" x="26" y="250" width="18" height="0" rx="4" class="fillw"/>
-            <text x="20" y="276">empty</text><text x="20" y="292">to full</text>
+            <text x="10" y="276">empty</text><text x="10" y="294">to full</text>
           </g>
         </svg>
         <p class="dive-status" id="dive-status" aria-live="polite">Syringe empty: Oogway floats at the surface.</p>

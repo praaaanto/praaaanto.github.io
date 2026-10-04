@@ -93,6 +93,14 @@ dialog.lb::backdrop{background:rgba(8,10,16,.88);backdrop-filter:blur(6px)}
 .lb-prev{left:18px}.lb-next{right:18px}
 .lb-close{top:28px;right:18px;margin-top:0}
 
+/* Key points */
+.keypoints{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.kp{padding:20px}
+.kp .ico{margin-bottom:12px}
+.kp b{display:block;font-weight:600;margin-bottom:4px}
+.kp span{color:var(--muted);font-size:15px;line-height:1.5}
+
+
 @media (max-width: 960px){
   .case-hero{grid-template-columns:minmax(0,1fr)}
   .steps{grid-template-columns:minmax(0,1fr);gap:0}
@@ -113,9 +121,6 @@ dialog.lb::backdrop{background:rgba(8,10,16,.88);backdrop-filter:blur(6px)}
   .lb-btn.lb-prev,.lb-btn.lb-next{top:auto;bottom:18px;margin-top:0}
 }
 
-/* Key points */
-.keypoints{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.kp{padding:20px}
-.kp .ico{margin-bottom:12px}
-.kp b{display:block;font-weight:600;margin-bottom:4px}
-.kp span{color:var(--muted);font-size:15px;line-height:1.5}
+@media (hover:none){
+  .gal button:hover img{transform:none}
+}

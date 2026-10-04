@@ -222,7 +222,8 @@
     });
     sheet.appendChild(list);
     var foot = document.createElement('div'); foot.className = 'sheet-foot';
-    foot.innerHTML = '<a href="mailto:praanto17@gmail.com">Email</a><a href="https://www.linkedin.com/in/praaaanto/" rel="noopener">LinkedIn</a><a href="https://orcid.org/0009-0005-6870-2118" rel="noopener">ORCID</a>';
+    var cssLink = document.querySelector('link[href$="site.css"]'), cvBase = cssLink ? cssLink.getAttribute('href').replace('site.css', '') : 'assets/';
+    foot.innerHTML = '<a href="' + cvBase + 'Usman_Gani_Pranto_CV.pdf" target="_blank" rel="noopener">CV (PDF)</a><a href="mailto:praanto17@gmail.com">Email</a><a href="https://www.linkedin.com/in/praaaanto/" rel="noopener">LinkedIn</a><a href="https://orcid.org/0009-0005-6870-2118" rel="noopener">ORCID</a>';
     sheet.appendChild(foot);
     document.body.appendChild(sheet);
     function setMenu(open) {

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SoccerBOT, a Mecanum-Wheel Soccer Robot | Usman Gani Pranto</title>
-<meta name="description" content="SoccerBOT is a remote-controlled mecanum-wheel soccer robot that placed 4th at the Intra BUET Robo Challenge 2024.">
+<meta name="description" content="SoccerBOT is a remote-controlled mecanum-wheel soccer robot by Usman Gani Pranto and team, a top five finisher at BUET Robo Carnival 2024.">
 <meta property="og:title" content="SoccerBOT, a robot that moves sideways">
 <meta property="og:description" content="A mecanum-wheel soccer robot: forward, sideways, diagonal and spin, without steering.">
 <meta property="og:image" content="https://praaaanto.github.io/assets/soccerbot/v1-closeup.jpg">
@@ -32,7 +32,7 @@
 .deck{fill:var(--panel-solid);stroke:var(--line-2);stroke-width:1.5}
 .whl rect{fill:color-mix(in srgb,var(--text) 85%,var(--panel-solid))}
 .whl .rl{stroke:var(--panel-solid);stroke-width:2;opacity:.55}
-.arr path{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke:var(--line-2);transition:stroke .3s,opacity .3s}
+.arr path{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke:var(--line-2);transition:stroke .3s}
 .arr{transition:opacity .3s}
 .arr.fwd path{stroke:var(--copper)}
 .arr.back path{stroke:var(--silver)}
@@ -44,12 +44,12 @@
 .k-fwd{background:var(--copper)}.k-back{background:var(--silver)}.k-off{background:var(--line-2)}
 .mec-status{font-family:var(--mono);font-size:12.5px;color:var(--copper);margin:0;min-height:1.6em}
 /* Layers */
-.layers{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;position:relative}
+.layers{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
 .layers li{display:flex;gap:16px;align-items:center;padding:16px 20px}
 .layers .ln{flex:none;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font:600 14px var(--mono);color:var(--on-copper);background:var(--copper);-webkit-mask:var(--hexfill) center/contain no-repeat;mask:var(--hexfill) center/contain no-repeat}
 .layers b{display:block;font-weight:600}
 .layers span{color:var(--muted);font-size:14.5px}
-.layers li:nth-child(1){margin-left:0}.layers li:nth-child(2){margin-left:4%}.layers li:nth-child(3){margin-left:8%}.layers li:nth-child(4){margin-left:12%}.layers li:nth-child(5){margin-left:16%}
+.layers li:nth-child(2){margin-left:4%}.layers li:nth-child(3){margin-left:8%}.layers li:nth-child(4){margin-left:12%}.layers li:nth-child(5){margin-left:16%}
 /* Versions */
 .evo{display:grid;grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr);gap:14px;align-items:stretch}
 .evo .card{padding:16px;display:flex;flex-direction:column;gap:6px}
@@ -66,13 +66,10 @@
 .screen video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .vid-btn{position:absolute;left:14px;bottom:14px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(11,14,24,.6);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .vid-btn svg{width:16px;height:16px}
-.roles4.three{grid-template-columns:repeat(3,minmax(0,1fr))}
-.roles4.three .card{flex-direction:column}
+.credits.one{grid-template-columns:minmax(0,1fr)}
 @media (max-width: 720px){
   .evo{grid-template-columns:minmax(0,1fr)}
   .evo .arrowcol{transform:rotate(90deg);height:40px}
-  .roles4.three{grid-template-columns:minmax(0,1fr)}
-  .roles4.three .card{flex-direction:row}
   .layers li:nth-child(n){margin-left:0}
   .mec .seg button{padding:10px 10px;font-size:13px}
   .screen{aspect-ratio:3/4}
@@ -97,6 +94,7 @@
       <a href="#versions">Versions</a>
       <a href="#runs">On the field</a>
       <a href="#events">Events</a>
+      <a href="#team">Team</a>
       <a class="cta" href="../index.html#projects">All projects</a>
     </nav>
     <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
@@ -120,8 +118,8 @@
       <h1 data-split>SoccerBOT, a robot that moves sideways</h1>
       <p class="lede" data-reveal>A remote-controlled soccer robot on mecanum wheels. It can drive forward, slide sideways, cut diagonally and spin on the spot, which is exactly what you want when the ball is loose.</p>
       <div class="factgrid" data-reveal>
-        <div class="fact"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></span><div><small>My role</small><b>Chassis design and mechanical assembly lead</b></div></div>
-        <div class="fact"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 01-8 0z"/><path d="M8 6H5v1a3 3 0 003 3M16 6h3v1a3 3 0 01-3 3M12 13v4M8 20h8"/></svg></span><div><small>Result</small><b>4th place, Intra BUET Robo Challenge 2024</b></div></div>
+        <div class="fact"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></span><div><small>My role</small><b>Chassis design, assembly lead and match driver</b></div></div>
+        <div class="fact"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 01-8 0z"/><path d="M8 6H5v1a3 3 0 003 3M16 6h3v1a3 3 0 01-3 3M12 13v4M8 20h8"/></svg></span><div><small>Result</small><b>Top five, BUET Robo Carnival 2024</b></div></div>
         <div class="fact"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><div><small>Competed at</small><b>BUET Robo Carnival 2024 and UAP Techtron 2025</b></div></div>
         <div class="fact"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></span><div><small>Tools</small><b>SolidWorks, AutoCAD, PCB work</b></div></div>
       </div>
@@ -159,7 +157,7 @@
           <button type="button" data-move="diagonal" aria-pressed="false">Diagonal</button>
           <button type="button" data-move="spin" aria-pressed="false">Spin</button>
         </div>
-        <svg viewBox="0 0 560 380" role="img" aria-label="Top view of the robot on a small pitch. Arrows on each wheel show which way it spins for the chosen move, and the robot moves accordingly." id="mec-svg">
+        <svg viewBox="0 0 560 380" role="img" aria-label="Top view of the robot on a small pitch. Arrows on each wheel show which way it spins for the chosen move, and the robot moves accordingly.">
           <rect x="10" y="10" width="540" height="360" rx="14" class="pitch"/>
           <line x1="280" y1="10" x2="280" y2="370" class="pline"/><circle cx="280" cy="190" r="48" class="pline"/>
           <rect x="10" y="140" width="14" height="100" class="goal"/><rect x="536" y="140" width="14" height="100" class="goal"/>
@@ -168,10 +166,10 @@
             <rect x="225" y="140" width="110" height="130" rx="10" class="chassis"/>
             <path d="M232 140 L 222 116 L 338 116 L 328 140 Z" class="scoop"/>
             <rect x="255" y="170" width="50" height="34" rx="4" class="deck"/>
-            <g class="whl" data-w="fl"><rect x="196" y="146" width="26" height="48" rx="6"/><path d="M200 154 l18 14 M200 166 l18 14 M200 178 l18 14" class="rl"/></g>
-            <g class="whl" data-w="fr"><rect x="338" y="146" width="26" height="48" rx="6"/><path d="M360 154 l-18 14 M360 166 l-18 14 M360 178 l-18 14" class="rl"/></g>
-            <g class="whl" data-w="rl"><rect x="196" y="216" width="26" height="48" rx="6"/><path d="M218 224 l-18 14 M218 236 l-18 14 M218 248 l-18 14" class="rl"/></g>
-            <g class="whl" data-w="rr"><rect x="338" y="216" width="26" height="48" rx="6"/><path d="M342 224 l18 14 M342 236 l18 14 M342 248 l18 14" class="rl"/></g>
+            <g class="whl"><rect x="196" y="146" width="26" height="48" rx="6"/><path d="M200 154 l18 14 M200 166 l18 14 M200 178 l18 14" class="rl"/></g>
+            <g class="whl"><rect x="338" y="146" width="26" height="48" rx="6"/><path d="M360 154 l-18 14 M360 166 l-18 14 M360 178 l-18 14" class="rl"/></g>
+            <g class="whl"><rect x="196" y="216" width="26" height="48" rx="6"/><path d="M218 224 l-18 14 M218 236 l-18 14 M218 248 l-18 14" class="rl"/></g>
+            <g class="whl"><rect x="338" y="216" width="26" height="48" rx="6"/><path d="M342 224 l18 14 M342 236 l18 14 M342 248 l18 14" class="rl"/></g>
             <g class="arr" data-a="fl" transform="translate(180,170)"><path d="M0 18 V-18 M-7 -10 L0 -18 L7 -10"/></g>
             <g class="arr" data-a="fr" transform="translate(380,170)"><path d="M0 18 V-18 M-7 -10 L0 -18 L7 -10"/></g>
             <g class="arr" data-a="rl" transform="translate(180,240)"><path d="M0 18 V-18 M-7 -10 L0 -18 L7 -10"/></g>
@@ -216,7 +214,7 @@
     </div>
     <div class="body">
       <div class="evo" data-reveal>
-        <div class="card"><div class="pic"><img src="../assets/soccerbot/v1-holding.jpg" alt="The first version: open frame with exposed wires on top" width="952" height="1288" loading="lazy"></div><span class="chip dot done">2024</span><b>Version 1, open frame</b><span>Fast to build and easy to rewire between matches. Competed at BUET Robo Carnival 2024.</span></div>
+        <div class="card"><div class="pic"><img src="../assets/soccerbot/v1-holding.jpg" alt="The first version: open frame with exposed wires on top" width="952" height="1288" loading="lazy"></div><span class="chip dot done">2024</span><b>Version 1, open frame</b><span>Fast to build and easy to rewire between matches. Finished in the top five at BUET Robo Carnival 2024.</span></div>
         <div class="arrowcol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
         <div class="card"><div class="pic"><img src="../assets/soccerbot/v2-court.jpg" alt="The second version with a closed metal body, held at UAP Techtron 2025" width="952" height="1288" loading="lazy"></div><span class="chip dot review">2025</span><b>Version 2, enclosed body</b><span>The wiring sits inside a closed shell. Competed in the SoccerBOT segment of UAP Techtron 2025.</span></div>
       </div>
@@ -244,7 +242,6 @@
           <button type="button" class="vid-btn" id="clip-btn" aria-label="Play video"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg></button>
         </div>
       </div>
-      <div class="callout" data-reveal><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 01-8 0z"/><path d="M8 6H5v1a3 3 0 003 3M16 6h3v1a3 3 0 01-3 3M12 13v4M8 20h8"/></svg></span><div><b>4th place, Intra BUET Robo Challenge 2024</b><span>Placed among many university teams.</span></div></div>
     </div>
   </div>
 </section>
@@ -257,10 +254,11 @@
       <p data-reveal>Tap any photo to enlarge.</p>
     </div>
     <div class="body">
+      <div class="callout" data-reveal><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 01-8 0z"/><path d="M8 6H5v1a3 3 0 003 3M16 6h3v1a3 3 0 01-3 3M12 13v4M8 20h8"/></svg></span><div><b>Top five, BUET Robo Carnival 2024</b><span>I operated the robot's controller during the competition.</span></div></div>
       <div class="gal" data-reveal data-gallery>
         <figure><button type="button"><img src="../assets/soccerbot/techtron-backdrop.jpg" alt="Pranto at the UAP Techtron 2025 backdrop with a participant badge" width="952" height="1260" loading="lazy"></button><figcaption>UAP Techtron 2025, 25 April 2025</figcaption></figure>
         <figure><button type="button"><img src="../assets/soccerbot/v1-holding.jpg" alt="Pranto with the first robot and the radio transmitter at BUET" width="952" height="1288" loading="lazy"></button><figcaption>BUET Robo Carnival 2024</figcaption></figure>
-        <figure><button type="button"><img src="../assets/soccerbot/techtron-team.jpg" alt="Pranto taking a selfie with two teammates, one holding the robot" width="952" height="1288" loading="lazy"></button><figcaption>With teammates at Techtron</figcaption></figure>
+        <figure><button type="button"><img src="../assets/soccerbot/techtron-team.jpg" alt="Pranto taking a selfie with teammates Md. Sadat Tanzim and Pallab Paul, one holding the robot" width="952" height="1288" loading="lazy"></button><figcaption>With Sadat and Pallab at Techtron</figcaption></figure>
         <figure><button type="button"><img src="../assets/soccerbot/v2-court.jpg" alt="Pranto holding the second robot in front of the SoccerBOT segment banner" width="952" height="1288" loading="lazy"></button><figcaption>The SoccerBOT segment</figcaption></figure>
         <figure><button type="button"><img src="../assets/soccerbot/techtron-entrance.jpg" alt="The Techtron 2025 entrance arch at the University of Asia Pacific" width="952" height="1288" loading="lazy"></button><figcaption>University of Asia Pacific, Dhaka</figcaption></figure>
       </div>
@@ -271,14 +269,19 @@
 <section class="block" id="team">
   <div class="wrap">
     <div class="head">
-      <p class="eyebrow">My part<span class="count">06</span></p>
-      <h2 data-split>What I did.</h2>
+      <p class="eyebrow">People<span class="count">06</span></p>
+      <h2 data-split>My part, our team.</h2>
+      <p data-reveal>A three-person team. We built it together; these were my main parts.</p>
     </div>
     <div class="body">
-      <div class="roles4 three" data-reveal>
+      <div class="roles4" data-reveal>
         <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 22V12M21 7l-9 5-9-5"/></svg></span><div><b>Designed the chassis</b><span>Laid it out in SolidWorks and AutoCAD for a low, stiff, compact base.</span></div></div>
         <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></span><div><b>Led mechanical assembly</b><span>Motors, wheels, ball guide and the frame itself.</span></div></div>
         <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg></span><div><b>Integrated the electronics</b><span>Wired the microcontroller, drivers and receiver into the robot.</span></div></div>
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="10" rx="4"/><path d="M8 11v4M6 13h4"/><circle cx="15.5" cy="12" r="1"/><circle cx="17.5" cy="14.5" r="1"/></svg></span><div><b>Drove it in matches</b><span>Operated the radio controller during the competitions.</span></div></div>
+      </div>
+      <div class="credits one" data-reveal>
+        <div><small>Team</small><p>Md. Sadat Tanzim, Pallab Paul, Usman Gani Pranto</p></div>
       </div>
     </div>
   </div>

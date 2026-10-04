@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Oogway, a Robotic Sea Turtle | Usman Gani Pranto</title>
+<meta name="description" content="Oogway is a bio-mimetic sea turtle robot with flapping fin propulsion and syringe-based buoyancy control, built for ME 366 at BUET.">
+<meta property="og:title" content="Oogway, a robotic sea turtle">
+<meta property="og:description" content="A flapping-fin underwater robot that dives with a syringe ballast. Built and tested at BUET.">
+<meta property="og:image" content="https://praaaanto.github.io/assets/oogway/top.jpg">
+<meta property="og:url" content="https://praaaanto.github.io/projects/oogway.html">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#F4F5F7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B0E18'/%3E%3Ccircle cx='22' cy='26' r='9' fill='%23B3ADF5'/%3E%3Ccircle cx='42' cy='40' r='9' fill='%23E8955A'/%3E%3Ccircle cx='44' cy='18' r='4' fill='%235D6684'/%3E%3Ccircle cx='18' cy='46' r='4' fill='%235D6684'/%3E%3C/svg%3E">
+<script>(function(){var t='light';try{t=localStorage.getItem('theme')==='dark'?'dark':'light';}catch(e){}var d=document.documentElement;d.setAttribute('data-theme',t);d.classList.add('js');})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/case.css">
+<style>
+/* Nature to robot map */
+.map{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.map li{display:grid;grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);align-items:stretch;gap:10px}
+.map .nat,.map .bot{display:flex;gap:14px;align-items:flex-start;padding:18px 20px;border-radius:16px;border:1px solid var(--line);background:var(--panel)}
+.map .bot{flex-direction:column;gap:2px;border-color:color-mix(in srgb,var(--copper) 35%,var(--line));background:color-mix(in srgb,var(--copper) 5%,var(--panel-solid))}
+.map small{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:2px}
+.map .bot small{color:var(--copper)}
+.map b{display:block;font-weight:600}
+.map span:not(.ico):not(.arrow){display:block;color:var(--muted);font-size:14.5px;line-height:1.5}
+.map .ico{color:var(--silver)}
+.map .arrow{display:flex;align-items:center;justify-content:center;color:var(--copper)}
+.map .arrow svg{width:26px;height:26px}
+
+/* Anatomy hotspots */
+.anat{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:22px;padding:16px;align-items:center}
+.anat-img{position:relative;border-radius:14px;overflow:hidden}
+.anat-img img{width:100%;border:0;border-radius:0}
+.pin{position:absolute;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;border:2px solid #fff;background:rgba(11,14,24,.72);color:#fff;font:600 14px/1 var(--mono);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background-color .3s,transform .3s var(--ease)}
+.pin::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(255,255,255,.7);animation:pin 2.2s ease-out infinite}
+@keyframes pin{from{transform:scale(.8);opacity:.9}to{transform:scale(1.6);opacity:0}}
+.pin:hover{transform:translate(-50%,-50%) scale(1.1)}
+.pin[aria-pressed="true"]{background:var(--copper);border-color:#fff}
+.anat-info{padding:8px 8px 8px 0}
+.anat-info small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--copper);margin-bottom:8px}
+.anat-info b{display:block;font-family:var(--display);font-size:clamp(22px,2.2vw,28px);line-height:1.15;margin-bottom:10px}
+.anat-info p{color:var(--muted);margin:0}
+
+/* Specs and flow */
+.specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.spec{padding:20px;display:flex;flex-direction:column;gap:4px}
+.spec .ico{margin-bottom:10px}
+.spec small{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.spec b{font-weight:600;font-size:16px;line-height:1.35}
+.spec span{color:var(--muted);font-size:14px}
+.flow{padding:clamp(16px,2.2vw,24px)}
+.flow-scroll{overflow-x:auto}
+.flow svg{display:block;width:100%;min-width:640px;height:auto}
+.fl line,.fl path{stroke:var(--line-2);stroke-width:2;fill:none;marker-end:url(#fa)}
+.fn rect{fill:var(--panel-solid);stroke:var(--line-2);stroke-width:1.5}
+.fn rect.hi{stroke:var(--copper);stroke-width:2}
+.ft text{font:600 13px var(--body);fill:var(--text);text-anchor:middle}
+.fo text{font:500 12px var(--mono);fill:var(--copper)}
+.fs{font:400 11px var(--mono);fill:var(--faint);text-anchor:middle}
+
+/* Dive simulator */
+.divesim{padding:clamp(16px,2.2vw,24px)}
+.divesim svg{display:block;width:100%;height:auto;margin-top:14px}
+.tank{fill:none;stroke:var(--line-2);stroke-width:2}
+.water{fill:color-mix(in srgb,var(--silver) 13%,var(--panel-solid))}
+.surf{fill:none;stroke:var(--silver);stroke-width:2;opacity:.7}
+.ruler line{stroke:var(--faint);stroke-width:1.5}
+.ruler text,.syr text{font:400 11px var(--mono);fill:var(--faint)}
+#turtle{transition:transform 2.6s cubic-bezier(.45,.05,.3,1)}
+.shell{fill:var(--copper)}
+.hull{fill:color-mix(in srgb,var(--text) 70%,var(--panel-solid))}
+.fin{fill:var(--panel-solid);stroke:var(--line-2);stroke-width:1.5}
+.barrel{fill:none;stroke:var(--line-2);stroke-width:2}
+.fillw{fill:var(--silver);transition:height 2.6s cubic-bezier(.45,.05,.3,1),y 2.6s cubic-bezier(.45,.05,.3,1)}
+.dive-status{font-family:var(--mono);font-size:12.5px;color:var(--copper);text-align:center;margin:10px auto 0;min-height:1.6em}
+
+/* Iterations and leaks */
+.iters{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.iters .card{padding:14px;display:flex;flex-direction:column;gap:8px}
+.iters .pic{border-radius:12px;overflow:hidden;aspect-ratio:4/3;margin-bottom:6px}
+.iters .pic img{width:100%;height:100%;object-fit:cover;border:0;border-radius:0}
+.iters .chip{align-self:flex-start}
+.iters b{font-weight:600}
+.iters p{color:var(--muted);font-size:14.5px;margin:0;line-height:1.5}
+.iters .final{border-color:color-mix(in srgb,var(--ok) 40%,var(--line))}
+.k{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px}
+.k.bad{color:var(--copper)}.k.good{color:var(--ok)}
+.leaks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.leak{padding:12px;display:flex;flex-direction:column;gap:12px}
+.leak img{width:100%;aspect-ratio:4/4;object-fit:cover;border-radius:12px;border:0}
+.leak b{display:block;font-weight:600;margin-bottom:2px}
+.leak p{color:var(--muted);font-size:14.5px;margin:0 0 10px;line-height:1.5}
+.leak > div{padding:0 6px 6px}
+
+/* Video, results, links */
+.vwrap{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#000}
+.vwrap video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.vid-btn{position:absolute;left:14px;bottom:14px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(11,14,24,.6);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.vid-btn svg{width:16px;height:16px}
+.results{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.res{padding:18px;display:flex;flex-direction:column;gap:4px}
+.res .ico{margin-bottom:10px;color:var(--ok)}
+.res b{font-weight:600}
+.res span{color:var(--muted);font-size:14px;line-height:1.5}
+.links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.links.one{grid-template-columns:minmax(0,1fr)}
+.linkcard{display:flex;align-items:center;gap:14px;padding:18px 20px;text-decoration:none;color:var(--text)}
+.linkcard small{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.linkcard b{font-weight:600}
+.linkcard .out{margin-left:auto;color:var(--copper);transition:transform .3s var(--ease)}
+.linkcard:hover{color:var(--text);border-color:var(--copper)}
+.linkcard:hover .out{transform:translate(3px,-3px)}
+
+@media (max-width: 960px){
+  .anat{grid-template-columns:minmax(0,1fr)}
+  .anat-info{padding:4px 6px 8px}
+  .results{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width: 720px){
+  .map li{grid-template-columns:minmax(0,1fr)}
+  .map .arrow{transform:rotate(90deg);height:26px}
+  .specs,.iters,.leaks,.links{grid-template-columns:minmax(0,1fr)}
+  .specs{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+.swipe{display:none}
+@media (max-width:640px){
+  .swipe{display:inline}
+  .ruler text,.syr text{font-size:16px}
+  .divesim .seg button{padding:10px 11px;font-size:13px}
+  .anat-img .pin{width:32px;height:32px;font-size:13px}
+}
+</style>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<canvas id="field" aria-hidden="true"></canvas>
+<div class="glow" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="dot"></span><b>Usman Gani Pranto</b><small>/ ME, BUET</small></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#idea">Idea</a>
+      <a href="#anatomy">Anatomy</a>
+      <a href="#dive">Buoyancy</a>
+      <a href="#iterations">Iterations</a>
+      <a href="#testing">Testing</a>
+      <a href="#team">Team</a>
+      <a class="cta" href="../index.html#projects">All projects</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+      <span class="sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span>
+      <span class="moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+<div class="wrap">
+  <div class="case-hero">
+    <div>
+      <ol class="crumbs" data-reveal>
+        <li><a href="../index.html">Index</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li aria-current="page">Oogway</li>
+      </ol>
+      <p class="eyebrow" data-reveal>Project<span class="count">03 of 04</span></p>
+      <h1 data-split>Oogway, a robotic sea turtle</h1>
+      <p class="lede" data-reveal>A bio-mimetic underwater robot that swims with flapping fins and dives by breathing water in and out of a syringe, the way a turtle adjusts its buoyancy.</p>
+      <div class="factgrid" data-reveal>
+        <div class="fact"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></span><div><small>My role</small><b>CAD, 3D printing, build, testing and debugging</b></div></div>
+        <div class="fact"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/></svg></span><div><small>Course</small><b>ME 366, Electro-Mechanical System Design</b></div></div>
+        <div class="fact"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c1-3.5 3.3-5 6-5s5 1.5 6 5M15 15c2.6 0 4.6 1.4 5.5 4.5"/></svg></span><div><small>Team</small><b>Team Oblivious, four members</b></div></div>
+        <div class="fact"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8c3 0 3 2 6 2s3-2 6-2 3 2 6 2M3 14c3 0 3 2 6 2s3-2 6-2 3 2 6 2"/></svg></span><div><small>Tested at</small><b>IWFM water reservoir, BUET, July 2025</b></div></div>
+      </div>
+    </div>
+
+    <figure class="showcase" data-reveal>
+      <div class="finder">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <span class="label l">Specimen</span><span class="label r" data-show-label>Built robot, photo</span>
+        <div class="viewport">
+          <img id="hero-photo" class="photo" src="../assets/oogway/top.jpg" alt="Oogway seen from above on concrete: a red shell with two tapered front fins and two paddle-shaped rear legs" width="1800" height="1355">
+          <img id="hero-cad" src="../assets/oogway/cad-shell.jpg" alt="SolidWorks render of Oogway with its red shell, front fins, rear legs and cylinder end caps" width="904" height="599" hidden style="opacity:0">
+        </div>
+      </div>
+      <div class="seg" role="group" aria-label="Show photo or render">
+        <button type="button" data-show="hero-photo" data-label="Built robot, photo" aria-pressed="true">Built</button>
+        <button type="button" data-show="hero-cad" data-label="SolidWorks model" aria-pressed="false">CAD</button>
+      </div>
+    </figure>
+  </div>
+</div>
+
+<section class="block" id="idea">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">The idea<span class="count">01</span></p>
+      <h2 data-split>Borrowed from a turtle.</h2>
+      <p data-reveal>Most small underwater robots stack thrusters. Sea turtles swim and dive with far less. We copied the animal, part for part.</p>
+    </div>
+    <div class="body">
+      <ol class="map" data-reveal>
+        <li><div class="nat"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14c4-8 12-9 16-8-3 3-6 9-14 10z"/></svg></span><div><small>Turtle</small><b>Front flippers</b><span>Main source of thrust.</span></div></div><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span><div class="bot"><small>Oogway</small><b>Two-axis front fins</b><span>3D printed, each driven by two servos for roll and yaw.</span></div></li>
+        <li><div class="nat"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="4" ry="8"/></svg></span><div><small>Turtle</small><b>Rear flippers</b><span>Steering and balance.</span></div></div><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span><div class="bot"><small>Oogway</small><b>Light rear legs</b><span>One servo each, kept light to save weight.</span></div></li>
+        <li><div class="nat"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v6M8 9c-3 0-5 3-5 7s2 5 4 5 3-2 3-5V9zM16 9c3 0 5 3 5 7s-2 5-4 5-3-2-3-5V9z"/></svg></span><div><small>Turtle</small><b>Lungs</b><span>Adjust buoyancy to rise or sink.</span></div></div><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span><div class="bot"><small>Oogway</small><b>Syringe ballast</b><span>A linear actuator pulls water in to dive and pushes it out to rise.</span></div></li>
+        <li><div class="nat"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3c5 0 9 4 9 9 0 3-2 6-9 9-7-3-9-6-9-9 0-5 4-9 9-9z"/><path d="M12 7l3 2v4l-3 2-3-2V9z"/></svg></span><div><small>Turtle</small><b>Shell</b><span>Protection with a smooth outline.</span></div></div><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span><div class="bot"><small>Oogway</small><b>Foam carapace</b><span>Light EVA foam covers that also help the robot float.</span></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="anatomy">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Anatomy<span class="count">02</span></p>
+      <h2 data-split>Tap the robot.</h2>
+      <p data-reveal>Each marker opens one part of the build.</p>
+    </div>
+    <div class="body">
+      <div class="card anat" data-reveal>
+        <div class="anat-img">
+          <img src="../assets/oogway/top.jpg" alt="Top view of Oogway used as a map of its parts" width="1800" height="1355">
+          <button type="button" class="pin" style="left:17%;top:77%" data-part="0" aria-label="Front fin">1</button>
+          <button type="button" class="pin" style="left:66%;top:75%" data-part="1" aria-label="Fin clamp and servos">2</button>
+          <button type="button" class="pin" style="left:31%;top:34%" data-part="2" aria-label="Rear leg">3</button>
+          <button type="button" class="pin" style="left:50%;top:54%" data-part="3" aria-label="Carapace and hull">4</button>
+          <button type="button" class="pin" style="left:50%;top:81%" data-part="4" aria-label="End cap and tether">5</button>
+        </div>
+        <div class="anat-info" aria-live="polite">
+          <small id="part-n">Part 1 of 5</small>
+          <b id="part-t">Front fin</b>
+          <p id="part-d">Modelled in SolidWorks and 3D printed in PLA, with a slight taper like a real flipper.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="system">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">The system<span class="count">03</span></p>
+      <h2 data-split>What's inside.</h2>
+      <p data-reveal>One sealed acrylic hull carries the brain, the power and the ballast.</p>
+    </div>
+    <div class="body">
+      <div class="specs" data-reveal>
+        <div class="card spec"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="8" width="18" height="8" rx="4"/></svg></span><small>Hull</small><b>Acrylic cylinder, 10 by 40 cm</b><span>Threaded nylon end caps</span></div>
+        <div class="card spec"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="5" y="6" width="14" height="12" rx="2"/><path d="M12 6V3M9 12h6"/></svg></span><small>Actuation</small><b>Six servo motors</b><span>Four on the front fins, two on the rear legs</span></div>
+        <div class="card spec"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l9-9M11 7l6 6M14 4l6 6M8 13l3 3"/></svg></span><small>Ballast</small><b>50 mL syringe</b><span>Driven by a 12 V linear actuator</span></div>
+        <div class="card spec"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg></span><small>Control</small><b>Arduino Uno</b><span>Python GUI on a 10 m tether</span></div>
+        <div class="card spec"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="16" height="10" rx="2"/><path d="M21 11v2M10 9l-2 3h4l-2 3"/></svg></span><small>Power</small><b>11.1 V LiPo battery</b><span>Stepped down to 5 V for the servos</span></div>
+        <div class="card spec"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M8 17l4 4 4-4M8 7l4-4 4 4"/></svg></span><small>Depth tested</small><b>Up to 1.5 m</b><span>Limited by the reservoir</span></div>
+      </div>
+
+      <div class="card flow" data-reveal>
+        <p class="meta" style="margin:0 0 10px">How a command travels<span class="swipe"> &middot; swipe to see all</span></p>
+        <div class="flow-scroll">
+          <svg viewBox="0 0 920 250" role="img" aria-label="System diagram. Upper path: laptop GUI, tether, Arduino Uno, motor driver, linear actuator, syringe, which makes the robot dive or surface. Lower path: battery, buck converter, six servos, fins, which make it swim and turn. The Arduino also commands the servos.">
+            <defs><marker id="fa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--faint)"/></marker></defs>
+            <g class="fl">
+              <line x1="120" y1="60" x2="170" y2="60"/><line x1="290" y1="60" x2="340" y2="60"/><line x1="460" y1="60" x2="510" y2="60"/><line x1="630" y1="60" x2="680" y2="60"/>
+              <line x1="120" y1="190" x2="170" y2="190"/><line x1="290" y1="190" x2="340" y2="190"/><line x1="460" y1="190" x2="510" y2="190"/>
+              <path d="M240 84 C 260 140, 360 150, 390 166"/>
+              <line x1="800" y1="60" x2="845" y2="60"/><line x1="630" y1="190" x2="845" y2="190"/>
+            </g>
+            <g class="fn">
+              <rect x="10" y="36" width="110" height="48" rx="10"/><rect x="180" y="36" width="110" height="48" rx="10" class="hi"/><rect x="350" y="36" width="110" height="48" rx="10"/><rect x="520" y="36" width="110" height="48" rx="10"/><rect x="690" y="36" width="110" height="48" rx="10"/>
+              <rect x="10" y="166" width="110" height="48" rx="10"/><rect x="180" y="166" width="110" height="48" rx="10"/><rect x="350" y="166" width="110" height="48" rx="10"/><rect x="520" y="166" width="110" height="48" rx="10"/>
+            </g>
+            <g class="ft">
+              <text x="65" y="65">Laptop GUI</text><text x="235" y="65">Arduino Uno</text><text x="405" y="65">Motor driver</text><text x="575" y="65">Linear actuator</text><text x="745" y="65">Syringe</text>
+              <text x="65" y="195">LiPo battery</text><text x="235" y="195">Buck converter</text><text x="405" y="195">Six servos</text><text x="575" y="195">Fins and legs</text>
+            </g>
+            <g class="fo"><text x="855" y="56">Dive or</text><text x="855" y="72">surface</text><text x="855" y="186">Swim and</text><text x="855" y="202">turn</text></g>
+            <text class="fs" x="145" y="50">tether</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="dive">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Buoyancy<span class="count">04</span></p>
+      <h2 data-split>Breathing to dive.</h2>
+      <p data-reveal>Oogway is trimmed to float slightly. Pulling water into the syringe makes it heavier than the water around it, so it sinks. Pushing the water out lets it rise. Try it.</p>
+    </div>
+    <div class="body">
+      <div class="card divesim" data-reveal id="divesim">
+        <div class="seg" role="group" aria-label="Buoyancy command" style="margin-top:0">
+          <button type="button" data-cmd="intake" aria-pressed="false">Intake water</button>
+          <button type="button" data-cmd="hover" aria-pressed="false">Hover</button>
+          <button type="button" data-cmd="inject" aria-pressed="true">Inject water</button>
+        </div>
+        <svg viewBox="0 0 600 330" role="img" aria-label="Side view of a water tank. The robot floats at the surface when the syringe is empty, hovers mid-depth when it is half full, and sinks to the bottom when it is full.">
+          <rect x="70" y="20" width="440" height="296" rx="10" class="tank"/>
+          <rect x="72" y="58" width="436" height="256" rx="8" class="water"/>
+          <path d="M72 58 q 18 -6 36 0 t 36 0 t 36 0 t 36 0 t 36 0 t 36 0 t 36 0 t 36 0 t 36 0 t 36 0 t 36 0 t 36 0" class="surf"/>
+          <g class="ruler"><line x1="530" y1="58" x2="530" y2="300"/><line x1="524" y1="58" x2="536" y2="58"/><line x1="524" y1="300" x2="536" y2="300"/><text x="542" y="62">0 m</text><text x="542" y="304">1.5 m</text></g>
+          <g id="turtle" style="transform:translate(0px,0px)">
+            <ellipse cx="290" cy="60" rx="70" ry="13" class="shell"/>
+            <rect x="242" y="64" width="96" height="20" rx="10" class="hull"/>
+            <path d="M228 66 L 180 52 L 186 64 Z" class="fin"/><path d="M352 66 L 400 52 L 394 64 Z" class="fin"/>
+            <ellipse cx="236" cy="86" rx="16" ry="5" class="fin"/><ellipse cx="344" cy="86" rx="16" ry="5" class="fin"/>
+          </g>
+          <g class="syr">
+            <text x="10" y="40">Syringe</text>
+            <rect x="24" y="52" width="22" height="200" rx="6" class="barrel"/>
+            <rect id="syr-fill" x="26" y="250" width="18" height="0" rx="4" class="fillw"/>
+            <text x="10" y="276">empty</text><text x="10" y="294">to full</text>
+          </g>
+        </svg>
+        <p class="dive-status" id="dive-status" aria-live="polite">Syringe empty: Oogway floats at the surface.</p>
+      </div>
+      <figure data-reveal>
+        <img src="../assets/oogway/buoyancy-test.jpg" alt="A phone running the control interface while the buoyancy unit is tested in the reservoir" width="1400" height="1009" loading="lazy">
+        <figcaption>Testing the buoyancy unit in the reservoir from the phone interface</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="iterations">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Iterations<span class="count">05</span></p>
+      <h2 data-split>Three hulls, one keeper.</h2>
+      <p data-reveal>We proved the buoyancy system first, then built the body around it.</p>
+    </div>
+    <div class="body">
+      <ol class="iters" data-reveal>
+        <li class="card"><div class="pic"><img src="../assets/oogway/iter-1.jpg" alt="First prototype inside a plastic soda bottle" width="678" height="496" loading="lazy"></div><span class="chip">Hull 1</span><b>Soda bottle, phone over Wi-Fi</b><p><span class="k bad">Problem</span>It dived, but had no fail-safe. If the surface command dropped, the robot stayed down.</p></li>
+        <li class="card"><div class="pic"><img src="../assets/oogway/iter-2.jpg" alt="Second prototype inside a large plastic water jug" width="670" height="467" loading="lazy"></div><span class="chip">Hull 2</span><b>Five-litre water jug</b><p><span class="k bad">Problem</span>Far too buoyant. It needed about 4.5 kg of extra ballast just to sink.</p></li>
+        <li class="card final"><div class="pic"><img src="../assets/oogway/iter-3.jpg" alt="Final buoyancy unit inside a clear acrylic cylinder with white end caps" width="604" height="355" loading="lazy"></div><span class="chip dot done">Final</span><b>Acrylic cylinder on a tether</b><p><span class="k good">Fix</span>Compact and watertight, with a wired link so the robot can always be called back.</p></li>
+      </ol>
+      <div class="duo" data-reveal>
+        <figure><img src="../assets/oogway/hull-held.jpg" alt="Pranto holding the sealed acrylic hull with electronics inside" width="900" height="1600" loading="lazy" style="aspect-ratio:4/5;object-fit:cover"><figcaption>The sealed hull with the electronics inside, June 2025</figcaption></figure>
+        <figure><img src="../assets/oogway/motion-trial.jpg" alt="The hull with front fins attached during a motion trial on a balcony" width="1600" height="1200" loading="lazy" style="aspect-ratio:4/5;object-fit:cover"><figcaption>First fin motion trial, July 2025</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="sealing">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Waterproofing<span class="count">06</span></p>
+      <h2 data-split>Keeping the water out.</h2>
+      <p data-reveal>Three places leaked. Each got its own fix.</p>
+    </div>
+    <div class="body">
+      <div class="leaks" data-reveal>
+        <div class="card leak"><img src="../assets/oogway/seal-cap.jpg" alt="End cap with the tether cable passing through a sealed hole" width="631" height="831" loading="lazy"><div><span class="k bad">Weak point</span><b>End cap holes</b><p>Where the tether and wires pass through the caps.</p><ul class="chips"><li class="chip">Epoxy resin</li><li class="chip">Hot glue</li></ul></div></div>
+        <div class="card leak"><img src="../assets/oogway/seal-thread.jpg" alt="Threaded joint between the end cap and the acrylic cylinder, sealed" width="607" height="800" loading="lazy"><div><span class="k bad">Weak point</span><b>Cylinder threads</b><p>The screw joint between each cap and the hull.</p><ul class="chips"><li class="chip">Petroleum jelly</li><li class="chip">Nylon glue</li></ul></div></div>
+        <div class="card leak"><img src="../assets/oogway/seal-servo.jpg" alt="A servo motor sealed with adhesive around its casing" width="632" height="831" loading="lazy"><div><span class="k bad">Weak point</span><b>Servo motors</b><p>Opened, packed with petroleum jelly inside, then sealed outside.</p><ul class="chips"><li class="chip">Petroleum jelly</li><li class="chip">B-6000 glue</li></ul></div></div>
+      </div>
+      <div class="callout" data-reveal><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 7 6 11a6 6 0 01-12 0c0-4 3-7 6-11z"/><path d="M9 14l2 2 4-4"/></svg></span><div><b>No significant leaks</b><span>The hull stayed dry through repeated dives in the reservoir.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="testing">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">In the water<span class="count">07</span></p>
+      <h2 data-split>It swims.</h2>
+      <p data-reveal>Tested in the reservoirs of the Institute of Water and Flood Management (IWFM), BUET.</p>
+    </div>
+    <div class="body">
+      <figure data-reveal>
+        <div class="vwrap"><video id="prep-video" src="../assets/oogway/prep.mp4" poster="../assets/oogway/prep-poster.jpg" muted loop playsinline preload="metadata" aria-label="The team preparing Oogway at the edge of the reservoir"></video>
+        <button type="button" class="vid-btn" id="vid-btn" aria-label="Pause video"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></button></div>
+        <figcaption>Preparing for a test run at the reservoir edge, 24 July 2025</figcaption>
+      </figure>
+      <div class="results" data-reveal>
+        <div class="card res"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><b>Swam forward</b><span>Steady thrust from the flapping front fins.</span></div>
+        <div class="card res"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18c0-7 5-12 12-12h3M16 3l3 3-3 3"/></svg></span><b>Turned both ways</b><span>By flapping one fin differently from the other.</span></div>
+        <div class="card res"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M8 17l4 4 4-4M8 7l4-4 4 4"/></svg></span><b>Dove and surfaced</b><span>Through up to 1.5 m, with smooth transitions.</span></div>
+        <div class="card res"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 12h18M7 8h10M7 16h10"/></svg></span><b>Hovered</b><span>Held a set depth once calibrated.</span></div>
+      </div>
+      <div class="note" data-reveal><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg></span><span>What did not go perfectly: play in the fin joints made turns slower and less precise than we wanted. That is the first thing a second version would fix.</span></div>
+      <div class="gal" data-reveal data-gallery>
+        <figure><button type="button"><img src="../assets/oogway/swim-forward.jpg" alt="Oogway swimming forward on the water surface" width="1062" height="610" loading="lazy"></button><figcaption>Forward on the surface</figcaption></figure>
+        <figure><button type="button"><img src="../assets/oogway/underwater-1.jpg" alt="Oogway below the water surface with fins spread" width="1000" height="863" loading="lazy"></button><figcaption>Under the surface</figcaption></figure>
+        <figure><button type="button"><img src="../assets/oogway/swim-right.jpg" alt="Oogway making a right turn" width="1098" height="627" loading="lazy"></button><figcaption>Right turn</figcaption></figure>
+        <figure><button type="button"><img src="../assets/oogway/swim-left.jpg" alt="Oogway making a left turn, seen from water level" width="1149" height="566" loading="lazy"></button><figcaption>Left turn at water level</figcaption></figure>
+        <figure><button type="button"><img src="../assets/oogway/underwater-2.jpg" alt="Oogway seen from above while submerged" width="702" height="651" loading="lazy"></button><figcaption>Diving</figcaption></figure>
+        <figure><button type="button"><img src="../assets/oogway/top-dusk.jpg" alt="Oogway after a test, wet, seen from above at dusk" width="1600" height="1205" loading="lazy"></button><figcaption>Out of the water after a run</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="control">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Control<span class="count">08</span></p>
+      <h2 data-split>A button for every move.</h2>
+      <p data-reveal>A Python interface sends simple commands down the tether. The Arduino turns each one into servo angles or actuator travel.</p>
+    </div>
+    <div class="body">
+      <div class="duo" data-reveal>
+        <figure><img src="../assets/oogway/gui.jpg" alt="Control interface with vertical motion buttons on the left and horizontal motion buttons on the right over a render of the robot" width="1200" height="1118" loading="lazy"><figcaption>The control interface</figcaption></figure>
+        <figure><img src="../assets/oogway/schematic.jpg" alt="Circuit diagram connecting the actuator, motor driver, Arduino and six servos" width="1200" height="1068" loading="lazy"><figcaption>Circuit schematic</figcaption></figure>
+      </div>
+      <div class="links one" data-reveal>
+        
+        <a class="card linkcard" href="https://drive.google.com/drive/folders/17wTAJk7eUVTPptUoqFMXtlRYsp2OOdVw?usp=sharing" rel="noopener"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></span><div><small>Resources</small><b>Report, poster and media</b></div><span class="out" aria-hidden="true">&#8599;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="team">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">People<span class="count">09</span></p>
+      <h2 data-split>My part, our team.</h2>
+      <p data-reveal>Team Oblivious, Group B1, ME 366. We built it together; these were my main parts.</p>
+    </div>
+    <div class="body">
+      <div class="roles4" data-reveal>
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3c5 0 9 4 9 9 0 3-2 6-9 9-7-3-9-6-9-9 0-5 4-9 9-9z"/></svg></span><div><b>Designed the CAD</b><span>Modelled the fins, clamps and full assembly in SolidWorks.</span></div></div>
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="5" y="6" width="14" height="12" rx="2"/><path d="M12 6V3M9 12h6"/></svg></span><div><b>Printed and built it</b><span>3D printed the parts, constructed the robot and sealed the motor pods.</span></div></div>
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8c3 0 3 2 6 2s3-2 6-2 3 2 6 2M3 14c3 0 3 2 6 2s3-2 6-2 3 2 6 2"/></svg></span><div><b>Tested and debugged</b><span>Ran the reservoir tests and worked through every fault with the team.</span></div></div>
+        <div class="card"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8"/></svg></span><div><b>Built the presentation</b><span>Made the slides and presented the project to the course panel.</span></div></div>
+      </div>
+      <figure data-reveal>
+        <img src="../assets/oogway/team-outdoor.jpg" alt="The four team members with Oogway beside the reservoir" width="1600" height="1200" loading="lazy">
+        <figcaption>Team Oblivious with Oogway at the IWFM reservoir</figcaption>
+      </figure>
+      <div class="duo" data-reveal>
+        <figure><img src="../assets/oogway/presenting.jpg" alt="Pranto standing in front of the project title slide beside the robot and poster" width="1205" height="1600" loading="lazy" style="aspect-ratio:4/5;object-fit:cover;object-position:50% 70%"><figcaption>Final presentation, 27 July 2025</figcaption></figure>
+        <figure><img src="../assets/oogway/team-poster.jpg" alt="The team seated behind the robot and the project poster in a classroom" width="1600" height="1063" loading="lazy" style="aspect-ratio:4/5;object-fit:cover"><figcaption>With the poster at the showcase</figcaption></figure>
+      </div>
+      <div class="credits" data-reveal>
+        <div><small>Team</small><p>Shaikh Mohammad Oais, Syed Akil Ahnaf Nafi, Usman Gani Pranto, Mohammad Sifat Hasan</p></div>
+        <div><small>Course instructors</small><p>Dr. Kazi Arafat Rahman, Shahriar Alam and Md. Moyeenul Hossain Ratul, Department of Mechanical Engineering, BUET</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <nav class="pager" aria-label="More work">
+    <a class="card" href="lhtes.html"><small>Previous</small><b>Honeycomb thermal storage</b></a>
+    <a class="card" href="soccerbot.html"><small>Next</small><b>SoccerBOT</b></a>
+  </nav>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fbar">
+      <span>&copy; 2026 Usman Gani Pranto. Last updated October 2026.</span>
+      <button type="button" id="totop">Back to top &uarr;</button>
+    </div>
+  </div>
+  <div class="giant" aria-hidden="true">PRANTO</div>
+</footer>
+
+<dialog class="lb" id="lb" aria-label="Photo viewer">
+  <div class="lb-inner"><img id="lb-img" src="" alt=""><p id="lb-cap"></p></div>
+  <button class="lb-btn lb-close" type="button" id="lb-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <button class="lb-btn lb-prev" type="button" id="lb-prev" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+  <button class="lb-btn lb-next" type="button" id="lb-next" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+</dialog>
+
+<script src="../assets/site.js"></script>
+<script src="../assets/case.js"></script>
+<script>
+(function () {
+  var reduce = window.SITE.reduce;
+  /* Anatomy hotspots */
+  var parts = [
+    ['Front fin', 'Modelled in SolidWorks and 3D printed in PLA, with a slight taper like a real flipper. The main source of thrust.'],
+    ['Fin clamp and servos', 'A 3D printed clamp holds two servos per fin, giving it two degrees of freedom: roll and yaw. Glued to the hull with contact cement, it never loosened in testing.'],
+    ['Rear leg', 'Cut light from cardboard because the rear legs add little thrust. One servo each, for balance and steering.'],
+    ['Carapace and hull', 'EVA foam shells, the same material as shoe soles, cover a sealed acrylic cylinder that carries the electronics, battery and syringe ballast.'],
+    ['End cap and tether', 'A threaded nylon cap seals the hull. The tether passes through it and carries commands from the laptop, so the robot can always be called back.']
+  ];
+  var pins = document.querySelectorAll('.pin'), pn = document.getElementById('part-n'), pt = document.getElementById('part-t'), pd = document.getElementById('part-d');
+  function pick(i) {
+    pins.forEach(function (p, k) { p.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+    pn.textContent = 'Part ' + (i + 1) + ' of ' + parts.length; pt.textContent = parts[i][0]; pd.textContent = parts[i][1];
+  }
+  pins.forEach(function (p, k) { p.addEventListener('click', function () { pick(k); }); });
+  pick(0);
+
+  /* Dive simulator */
+  var turtle = document.getElementById('turtle'), fill = document.getElementById('syr-fill'), status = document.getElementById('dive-status');
+  var states = {
+    inject: [0, 0, 'Syringe empty: Oogway floats at the surface.'],
+    hover: [110, 100, 'Syringe partly full: Oogway matches the water and hovers.'],
+    intake: [200, 196, 'Syringe full: Oogway is heavier than the water and dives.']
+  };
+  var cmdBtns = document.querySelectorAll('[data-cmd]');
+  function cmd(c) {
+    var s = states[c];
+    turtle.style.transform = 'translate(0px,' + s[0] + 'px)';
+    fill.setAttribute('height', s[1]); fill.setAttribute('y', 250 - s[1]);
+    status.textContent = s[2];
+    cmdBtns.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-cmd') === c ? 'true' : 'false'); });
+  }
+  cmdBtns.forEach(function (b) { b.addEventListener('click', function () { cmd(b.getAttribute('data-cmd')); }); });
+  if ('IntersectionObserver' in window && !reduce) {
+    var sim = document.getElementById('divesim');
+    var o = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { setTimeout(function () { cmd('intake'); }, 700); o.disconnect(); } }, { threshold: 0.5 });
+    o.observe(sim);
+  }
+
+  /* Video: plays muted while visible, never for reduced motion */
+  var v = document.getElementById('prep-video'), vb = document.getElementById('vid-btn');
+  var playI = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg>', pauseI = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
+  var userPaused = reduce;
+  function sync() { vb.innerHTML = v.paused ? playI : pauseI; vb.setAttribute('aria-label', v.paused ? 'Play video' : 'Pause video'); }
+  vb.addEventListener('click', function () { if (v.paused) { userPaused = false; v.play(); } else { userPaused = true; v.pause(); } });
+  v.addEventListener('play', sync); v.addEventListener('pause', sync); sync();
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (en) {
+    if (en[0].isIntersecting && !userPaused) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } else if (!en[0].isIntersecting) v.pause();
+  }, { threshold: 0.4 }).observe(v);
+})();
+</script>
+</body>
+</html>

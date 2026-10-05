@@ -84,6 +84,20 @@
     revealables.forEach(function (el) { io.observe(el); });
   }
 
+  /* 3b. Footer wordmark: scale it so the whole name always fits the screen width */
+  function fitGiant() {
+    document.querySelectorAll('.giant').forEach(function (g) {
+      var avail = (g.parentElement ? g.parentElement.clientWidth : innerWidth) * 0.94;
+      g.style.fontSize = '100px';
+      var w = g.getBoundingClientRect().width || g.scrollWidth;
+      if (w) g.style.fontSize = Math.min(260, Math.max(40, 100 * avail / w)) + 'px';
+    });
+  }
+  fitGiant();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitGiant);
+  addEventListener('load', fitGiant);
+  var gt; addEventListener('resize', function () { clearTimeout(gt); gt = setTimeout(fitGiant, 120); });
+
   /* 4. Scroll spy for in-page navigation */
   var links = {};
   document.querySelectorAll('.nav a[href^="#"]').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });

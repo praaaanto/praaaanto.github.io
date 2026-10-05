@@ -15,7 +15,7 @@
 <script>(function(){var t='light';try{t=localStorage.getItem('theme')==='dark'?'dark':'light';}catch(e){}var d=document.documentElement;d.setAttribute('data-theme',t);d.classList.add('js');})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/site.css">
 <link rel="stylesheet" href="../assets/case.css">
 <style>
@@ -38,17 +38,17 @@
 .arr.back path{stroke:var(--silver)}
 .arr.off{opacity:.2}
 .mec-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
-.wheelkey{display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px;color:var(--muted)}
+.wheelkey{display:flex;flex-wrap:wrap;gap:14px;font-size:var(--fs-sm);color:var(--muted)}
 .wheelkey span{display:inline-flex;align-items:center;gap:7px}
 .wheelkey i{width:16px;height:4px;border-radius:3px;display:inline-block}
 .k-fwd{background:var(--copper)}.k-back{background:var(--silver)}.k-off{background:var(--line-2)}
-.mec-status{font-family:var(--mono);font-size:12.5px;color:var(--copper);margin:0;min-height:1.6em}
+.mec-status{font-family:var(--mono);font-size:var(--fs-xs);color:var(--copper);margin:0;min-height:1.6em}
 /* Layers */
 .layers{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
 .layers li{display:flex;gap:16px;align-items:center;padding:16px 20px}
-.layers .ln{flex:none;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font:600 14px var(--mono);color:var(--on-copper);background:var(--copper);-webkit-mask:var(--hexfill) center/contain no-repeat;mask:var(--hexfill) center/contain no-repeat}
+.layers .ln{flex:none;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font:600 var(--fs-sm) var(--mono);color:var(--on-copper);background:var(--copper);-webkit-mask:var(--hexfill) center/contain no-repeat;mask:var(--hexfill) center/contain no-repeat}
 .layers b{display:block;font-weight:600}
-.layers span{color:var(--muted);font-size:14.5px}
+.layers span{color:var(--muted);font-size:var(--fs-sm)}
 .layers li:nth-child(2){margin-left:4%}.layers li:nth-child(3){margin-left:8%}.layers li:nth-child(4){margin-left:12%}.layers li:nth-child(5){margin-left:16%}
 /* Versions */
 .evo{display:grid;grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr);gap:14px;align-items:stretch}
@@ -57,7 +57,7 @@
 .evo .pic img{width:100%;height:100%;object-fit:cover;object-position:50% 60%;border:0;border-radius:0}
 .evo .chip{align-self:flex-start}
 .evo b{display:block;font-weight:600}
-.evo span:not(.chip){color:var(--muted);font-size:15px;line-height:1.5}
+.evo span:not(.chip){color:var(--muted);font-size:var(--fs-base);line-height:1.5}
 .evo .arrowcol{display:flex;align-items:center;justify-content:center;color:var(--copper)}
 .evo .arrowcol svg{width:36px;height:36px}
 /* Clip player */
@@ -71,7 +71,7 @@
   .evo{grid-template-columns:minmax(0,1fr)}
   .evo .arrowcol{transform:rotate(90deg);height:40px}
   .layers li:nth-child(n){margin-left:0}
-  .mec .seg button{padding:10px 10px;font-size:13px}
+  .mec .seg button{padding:10px 10px;font-size:var(--fs-sm)}
   .screen{aspect-ratio:3/4}
 }
 </style>
@@ -110,7 +110,7 @@
   <div class="case-hero">
     <div>
       <ol class="crumbs" data-reveal>
-        <li><a href="../index.html">Index</a></li>
+        <li><a href="../index.html">Home</a></li>
         <li><a href="../index.html#projects">Projects</a></li>
         <li aria-current="page">SoccerBOT</li>
       </ol>
